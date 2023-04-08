@@ -20,11 +20,11 @@ const forumController = {
                 ]
             });
             return res.status(200).json({
-                isError: false,
+                status: "ok",
                 listOfPost
             });
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -37,11 +37,11 @@ const forumController = {
             });
 
             return res.status(200).json({
-                isError: false,
+                status: "ok",
                 listOfPost
             });
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -49,7 +49,7 @@ const forumController = {
         try {
             if (!req.body.title || !req.body.content) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -62,13 +62,13 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     post,
                     message: "Post is waiting for check!"
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -76,7 +76,7 @@ const forumController = {
         try {
             if (!req.body.content || !(req.body.ID_Post ^ req.body.ID_Parent_cmt)) { //content != null, ID_Post/ID_Parent_cmt need exact 1 != null
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Invalid Input'
                 })
             } else {
@@ -89,13 +89,13 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     comment,
                     message: "Success"
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -103,7 +103,7 @@ const forumController = {
         try {
             if (!req.body.ID_Post) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -121,13 +121,13 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: "Post is waiting for check again!"
                 })
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -135,7 +135,7 @@ const forumController = {
         try {
             if (!req.body.ID_Comment || !req.body.content) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -151,13 +151,13 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: "Success"
                 })
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -165,7 +165,7 @@ const forumController = {
         try {
             if (!req.query.id) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -176,12 +176,12 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Delete Post successfully'
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -189,7 +189,7 @@ const forumController = {
         try {
             if (!req.query.id) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -200,12 +200,12 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Delete Comment successfully'
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -220,11 +220,11 @@ const forumController = {
                 }]
             });
             return res.status(200).json({
-                isError: false,
+                status: "ok",
                 listOfPost
             });
         } catch (error) {
-            return res.status(500).json({isError:true})
+            return res.status(500).json({status:true})
         }
     },
 
@@ -232,7 +232,7 @@ const forumController = {
         try {
             if (!req.body.ID_Post) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -246,12 +246,12 @@ const forumController = {
                 )
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Post accepted!'
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -259,7 +259,7 @@ const forumController = {
         try {
             if (!req.query.id) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -270,12 +270,12 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Delete Post successfully'
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
@@ -283,7 +283,7 @@ const forumController = {
         try {
             if (!req.query.id) {
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             } else {
@@ -294,12 +294,12 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Delete Comment successfully'
                 })
             }
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 }

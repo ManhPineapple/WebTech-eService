@@ -7,12 +7,14 @@ type IntrinsicAttributes = EmotionJSX.IntrinsicAttributes;
 
 function WithoutAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType<T>) {
   return function ComponentWithoutAuth(props: T) {
-    const { refreshToken, userState } = useAppSelector((s) => ({
-      refreshToken: s.auth.refreshToken,
+    const {  userState } = useAppSelector((s) => ({
       userState: s.user.data,
     }));
+
+    console.log(userState);
     
-    if (!!refreshToken && userState?.status === 1) return <Navigate to='/info' />;
+    
+    if (userState?.username !== undefined) return <Navigate to='/' />;
 
     return <WrappedComponent {...props} />;
   };

@@ -15,10 +15,10 @@ forumRouter.post('/createcomment', forumController.createComment);
 forumRouter.patch('/updatecomment', forumController.updateComment);
 forumRouter.delete('/deletecomment', forumController.deleteComment);
 
-forumRouter.get('/getpending', authMiddleware.verifyAdmin, forumController.getPending);
-forumRouter.patch('/acceptpost', authMiddleware.verifyAdmin, forumController.acceptPost);
-forumRouter.delete('/admindeletepost', authMiddleware.verifyAdmin, forumController.adminDeletePost);
-forumRouter.delete('/admindeletecomment', authMiddleware.verifyAdmin, forumController.adminDeleteComment);
+forumRouter.get('/getpending', forumController.getPending);
+forumRouter.patch('/acceptpost', forumController.acceptPost);
+forumRouter.delete('/admindeletepost', forumController.adminDeletePost);
+forumRouter.delete('/admindeletecomment', forumController.adminDeleteComment);
 
 
 export default forumRouter;

@@ -32,13 +32,13 @@ const authController = {
         try {
             if (!req.body.username || !req.body.password || !req.body.fullname || !(req.body.email || req.body.phone_number))
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
             
             if (!emailValidator.validate(req.body.email))
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Email is invalid'
                 })
 
@@ -48,8 +48,8 @@ const authController = {
 
             if (dbUser)
                 return res.status(500).json({
-                    isError: true,
-                    message: 'Email is already existed'
+                    status: false,
+                    message: 'User is already existed'
                 })
 
             const salt = await bcrypt.genSalt(10);
@@ -64,30 +64,29 @@ const authController = {
             })
 
             return res.status(200).json({
-                isError: false,
-                user,
+                status: "ok",
                 message: 'Register Successfully'
             });
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:false, message: ""});
         }
     },
 
     async login(req, res) {
         try {
-            if (!req.body.email || !req.body.password)
+            if (!req.body.phone_number || !req.body.password)
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Missing required field'
                 })
 
             const user = await db.User.findOne({
-                where: {email: req.body.email}
+                where: {phone_number: req.body.phone_number}
             })
 
             if (!user)
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Wrong username or password'
                 })
 
@@ -107,31 +106,31 @@ const authController = {
                     httpOnly: true,
                 });
                 return res.status(200).json({
-                    isError: false,
+                    status: "ok",
                     message: 'Login Successfully',
-                    user: user,
+                    data: user,
                 })
             }
             else
                 return res.status(500).json({
-                    isError: true,
+                    status: false,
                     message: 'Wrong username or password'
                 })
         } catch (error) {
-            return res.status(500).json({isError:true});
+            return res.status(500).json({status:true});
         }
     },
 
     async refreshToken(req, res) {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) return res.status(401).json({
-            isError: true,
+            status: false,
             message: 'Please login to continue'
         });
         jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
             if (err) {
                 return res.status(403).json({
-                    isError: true,
+                    status: false,
                     message: 'Token is invalid'
                 });
             }
@@ -148,7 +147,7 @@ const authController = {
                 httpOnly: true,
             });
             return res.status(200).json({
-                isError: false,
+                status: "ok",
                 message: 'Refresh token successfully'
             });
         })
@@ -158,7 +157,7 @@ const authController = {
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken");
         return res.status(200).json({
-            isError: false,
+            status: "ok",
             message: 'Logout Successfully'
         })
     },

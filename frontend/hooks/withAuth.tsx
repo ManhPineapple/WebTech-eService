@@ -7,12 +7,13 @@ type IntrinsicAttributes = EmotionJSX.IntrinsicAttributes;
 
 function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType<T>) {
   return function ComponentWithAuth(props: T) {
-    const { refreshToken, userState } = useAppSelector((s) => ({
-      refreshToken: s.auth.refreshToken,
+    const { userState } = useAppSelector((s) => ({
       userState: s.user.data,
     }));
+
+    console.log(userState);
     
-    if (!refreshToken || userState?.status !== 1) return <Navigate to='/login' />;
+    if (userState?.username === undefined) return <Navigate to='/login' />;
 
     return (
       <WrappedComponent {...props} />

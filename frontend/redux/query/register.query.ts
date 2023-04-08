@@ -9,9 +9,9 @@ export const registerApi = createApi({
   tagTypes: ['Registers'],
   keepUnusedDataFor: 600,
   endpoints: (builder) => ({
-    agencyRegister: builder.mutation<TResponse, {data: TUser}>({
+    register: builder.mutation<TResponse, {data: TUser}>({
       query: (data) => ({
-        url: `/register`,
+        url: `/auth/register`,
         method: 'post',
         data,
       }),
@@ -20,5 +20,5 @@ export const registerApi = createApi({
   }),
 });
 export const {
-  useAgencyRegisterMutation,
+  useRegisterMutation,
 } = registerApi;

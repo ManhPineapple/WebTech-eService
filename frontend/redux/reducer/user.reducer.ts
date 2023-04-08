@@ -12,19 +12,21 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<TUser | null>) {
-      if (action.payload == null) state.data = null;
-      else state.data = { ...state.data, ...action.payload };
+    setUser(state, {payload}) {
+      console.log(payload);
+      
+      if (payload == null) state.data = null;
+      else state.data = { ...state.data, ...payload };
     },
   },
-  extraReducers: (builder) => {
-    builder.addMatcher(userApi.endpoints.getCurrentUser.matchFulfilled, (state, { payload }) => {
-      state.data = payload.data.user_detail;
-    });
-    builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
-      state.data = null;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+  //     state.data = payload.data.user_data;
+  //   });
+  //   builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
+  //     state.data = null;
+  //   });
+  // },
 });
 
 export const { setUser } = userSlice.actions;

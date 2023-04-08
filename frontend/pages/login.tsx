@@ -1,43 +1,44 @@
 import styled from '@emotion/styled';
-import { Button, Card, Form, Input, Layout, Checkbox, Carousel, Row } from 'antd';
-import { useMediaQuery } from 'react-responsive';
-import { useId, useState } from "react";
+import { Button, Card, Form, Input, Layout, Checkbox, Row } from 'antd';
+import { useState } from "react";
 import WithoutAuth from 'src/hooks/withoutAuth';
 import { useLoginMutation } from '../redux/query/auth.query';
-import { useAppSelector } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import useApp from 'src/hooks/useApp';
 
 import { FaBuilding, FaCarAlt, FaLock, FaPhoneAlt } from 'react-icons/fa';
 import { BsPeople } from 'react-icons/bs';
-import { useAgencyRegisterMutation } from 'src/redux/query/register.query';
-
+import { useRegisterMutation } from 'src/redux/query/register.query';
+import { setUser } from 'src/redux/reducer/user.reducer';
+import { useRouter } from 'next/router';
 
 function LoginPage() {
   const [signUp, setSignUp] = useState(false);
 
-  const mediaAbove875 = useMediaQuery({ minWidth: 875 });
-  const unique = useId();
-  const [form] = Form.useForm();
-  const { refreshToken, userState } = useAppSelector((s) => ({
-    refreshToken: s.auth.refreshToken,
-    userState: s.user.data,
-  }));
   const { notification } = useApp();
+  const router = useRouter();
+  const dispatch = useAppDispatch()
+  const [form] = Form.useForm();
+
   const [loginMutate, { isLoading }] = useLoginMutation();
 
   const handleLogin = (formData: any) => {
+    console.log(formData);
     
     loginMutate(formData)
       .unwrap()
       .then(({ data, message }) => {
+        console.log(data);
+        dispatch(setUser(data));
         notification.success({ message, placement: 'bottomLeft' });
+        router.push('/');
       })
       .catch((err) => {
 
       });
   };
 
-  const [agencyRegisterMutate] = useAgencyRegisterMutation();
+  const [agencyRegisterMutate] = useRegisterMutation();
 
   const handleSignUp = (formData: any) => {
     const arr = formData.role;
@@ -69,10 +70,10 @@ function LoginPage() {
               size='large'
               requiredMark={false}
               onFinish={handleLogin}
-              disabled={(!!refreshToken && !!userState?.role) || isLoading}
+              disabled={isLoading}
             >
               <Form.Item
-                name='phone'
+                name='phone_number'
                 hasFeedback={isLoading}
                 validateStatus={isLoading ? 'validating' : undefined}
                 rules={[{ required: true, message: '• Số điện thoại là bắt buộc' }]}
@@ -80,15 +81,14 @@ function LoginPage() {
                 <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Số điện thoại...' />
               </Form.Item>
               <Form.Item
-                name='code'
+                name='password'
                 hasFeedback={isLoading}
                 validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
-                  { required: true, message: '• Mã đăng nhập là bắt buộc' },
-                  { len: 6, message: '• Mã đăng nhập phải chứa đúng 6 chữ số' },
+                  { required: true, message: '• Mật khẩu là bắt buộc' },
                 ]}
               >
-                <Input.Password prefix={<FaLock />} placeholder='Mã đăng nhập...' />
+                <Input.Password prefix={<FaLock />} placeholder='Mật khẩu...' />
               </Form.Item>
               <Form.Item>
                 <Button type='primary' htmlType='submit' block>
@@ -111,7 +111,7 @@ function LoginPage() {
               size='large'
               requiredMark={false}
               onFinish={handleSignUp}
-              disabled={(!!refreshToken && !!userState?.role) || isLoading}
+              disabled={isLoading}
             >
               <Form.Item
                 name='phone'

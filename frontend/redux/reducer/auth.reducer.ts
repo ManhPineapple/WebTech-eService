@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authApi } from '../query/auth.query';
 
 type TState = {
   refreshToken: string | null;
@@ -16,12 +15,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
-      state.refreshToken = payload.data.refresh_token;
-    });
-    builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
-      state.refreshToken = null;
-    });
   },
 });
 
