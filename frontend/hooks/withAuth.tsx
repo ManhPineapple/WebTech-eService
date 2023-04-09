@@ -3,6 +3,7 @@ import { ComponentType } from 'react';
 import Navigate from './Navigate';
 import { useAppSelector } from 'src/redux/store';
 
+
 type IntrinsicAttributes = EmotionJSX.IntrinsicAttributes;
 
 function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType<T>) {
@@ -11,8 +12,6 @@ function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType
       userState: s.user.data,
     }));
 
-    console.log(userState);
-    
     if (userState?.username === undefined) return <Navigate to='/login' />;
 
     return (

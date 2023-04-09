@@ -10,28 +10,22 @@ import { FaBuilding, FaCarAlt, FaLock, FaPhoneAlt } from 'react-icons/fa';
 import { BsPeople } from 'react-icons/bs';
 import { useRegisterMutation } from 'src/redux/query/register.query';
 import { setUser } from 'src/redux/reducer/user.reducer';
-import { useRouter } from 'next/router';
 
 function LoginPage() {
   const [signUp, setSignUp] = useState(false);
 
   const { notification } = useApp();
-  const router = useRouter();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
   const [loginMutate, { isLoading }] = useLoginMutation();
 
-  const handleLogin = (formData: any) => {
-    console.log(formData);
-    
+  const handleLogin = (formData: any) => {  
     loginMutate(formData)
       .unwrap()
       .then(({ data, message }) => {
-        console.log(data);
         dispatch(setUser(data));
         notification.success({ message, placement: 'bottomLeft' });
-        router.push('/');
       })
       .catch((err) => {
 

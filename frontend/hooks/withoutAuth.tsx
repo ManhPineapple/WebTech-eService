@@ -10,9 +10,6 @@ function WithoutAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentT
     const {  userState } = useAppSelector((s) => ({
       userState: s.user.data,
     }));
-
-    console.log(userState);
-    
     
     if (userState?.username !== undefined) return <Navigate to='/' />;
 
