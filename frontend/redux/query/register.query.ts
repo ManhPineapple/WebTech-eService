@@ -1,11 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { TResponse } from '../../types/response.types';
-import baseQueryWithReauth from '../app/baseQueryWithReauth';
 import { TUser } from 'src/types/user.types';
+import { TResponse } from '../../types/response.types';
+import baseQuery from '../app/baseQuery';
 
 export const registerApi = createApi({
   reducerPath: 'registerApi',
-  baseQuery: baseQueryWithReauth,
+  baseQuery: baseQuery,
   tagTypes: ['Registers'],
   keepUnusedDataFor: 600,
   endpoints: (builder) => ({
@@ -15,7 +15,6 @@ export const registerApi = createApi({
         method: 'post',
         data,
       }),
-      invalidatesTags: [],
     }),
   }),
 });

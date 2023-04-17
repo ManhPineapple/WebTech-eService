@@ -3,7 +3,7 @@ import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL as string;
-axios.interceptors.request.use((config) => {
+axios.interceptors.request.use((config: any) => {
   config.headers = {
     'Content-Type': 'application/json',
   };
