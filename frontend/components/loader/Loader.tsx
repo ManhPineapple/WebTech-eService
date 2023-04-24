@@ -1,6 +1,4 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { LogoSvg } from '../icons';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -27,12 +25,10 @@ const ModalWrapper = styled.div`
     color: rgba(0, 0, 0, 0.65);
   }
   .modal-container .text-counter {
-    color: ${({ theme }) => theme.colorPrimary};
   }
 `;
 
 const Loader = () => {
-  const { colorPrimary } = useTheme();
   return (
     <ModalWrapper>
       <div className='modal-container'>
