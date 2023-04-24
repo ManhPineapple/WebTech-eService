@@ -1,0 +1,5 @@
+{
+  "facebook_api_key"      :     "975012276824892",
+  "facebook_api_secret"   :     "eea948dc1d1a74f5d977d4d67838fcd7",
+  "callback_url"          :     "http://localhost:8000/auth/facebook"
+}
