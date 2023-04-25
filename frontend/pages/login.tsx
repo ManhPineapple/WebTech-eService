@@ -5,11 +5,14 @@ import WithoutAuth from 'src/hooks/withoutAuth';
 import { useLoginMutation } from '../redux/query/auth.query';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import useApp from 'src/hooks/useApp';
+import Link from 'next/link';
 
-import { FaBuilding, FaCarAlt, FaLock, FaPhoneAlt } from 'react-icons/fa';
+import { FaBuilding, FaCarAlt, FaLock, FaPhoneAlt,FaSignature} from 'react-icons/fa';
+import {AiFillFacebook} from 'react-icons/ai'
 import { BsPeople } from 'react-icons/bs';
 import { useRegisterMutation } from 'src/redux/query/register.query';
 import { setUser } from 'src/redux/reducer/user.reducer';
+import { relative } from 'path';
 
 function LoginPage() {
   const [signUp, setSignUp] = useState(false);
@@ -65,14 +68,19 @@ function LoginPage() {
               requiredMark={false}
               onFinish={handleLogin}
               disabled={isLoading}
-            >
+            > 
+              <div className='img-instagram-container'>
+                <i  data-visualcompletion="css-img" 
+                    aria-label="Instagram" role="img"
+                    className='img-instagram'></i>
+              </div>
               <Form.Item
                 name='phone_number'
                 hasFeedback={isLoading}
                 validateStatus={isLoading ? 'validating' : undefined}
                 rules={[{ required: true, message: '• Số điện thoại là bắt buộc' }]}
               >
-                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Số điện thoại...' />
+                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Phonenumber' />
               </Form.Item>
               <Form.Item
                 name='password'
@@ -82,18 +90,34 @@ function LoginPage() {
                   { required: true, message: '• Mật khẩu là bắt buộc' },
                 ]}
               >
-                <Input.Password prefix={<FaLock />} placeholder='Mật khẩu...' />
+                <Input.Password prefix={<FaLock />} placeholder='Password' />
               </Form.Item>
+
               <Form.Item>
-                <Button type='primary' htmlType='submit' block>
-                  Đăng nhập
+                <Button style={{backgroundColor: '#0095F6',paddingTop: '3px',fontWeight:'bold',color:'white'}} htmlType='submit' block >
+                  Log in
                 </Button>
               </Form.Item>
-              <div className='switch-state'>
-                Chưa có tài khoản?_
-                <div className='change-btn' onClick={() => setSignUp(true)}>
-                  Đăng ký ngay
-                </div>
+
+              <div className="label-or-container">
+                <div className="line-label"></div>
+                   <label className="label-or">OR</label>
+                <div className="line-label"></div>
+              </div>
+
+              <div>
+                <Link href="">
+                  <div className="login-facebook-container">
+                    <AiFillFacebook size={30} className="facebook-icon" color='#385185'/>
+                    <span style={{fontWeight: 'bold', color:'#385185',fontSize:'16px'}}>Log in with Facebook</span>
+                  </div>
+                </Link>
+              </div>
+
+              <div className='forgot-password-container'> 
+                <Link href="">
+                    <span style ={{fontSize: '14px',color: 'black'}}>Forgot password?</span>
+                </Link>
               </div>
             </Form>
           }
@@ -106,84 +130,208 @@ function LoginPage() {
               requiredMark={false}
               onFinish={handleSignUp}
               disabled={isLoading}
-            >
+            > 
+              <div className='img-instagram-container'>
+                <i  data-visualcompletion="css-img" 
+                    aria-label="Instagram" role="img"
+                    className='img-instagram'></i>
+              </div>
+
+              <div style={{fontSize: '18px', fontWeight: 'bold', textAlign: 'center',marginBottom:'10px'}}>
+                 Sign up to see photos and videos from your friends
+              </div> 
+
+              <Form.Item>
+                  <Button block className="login-facebook-container" style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
+                    <AiFillFacebook size={25} className="facebook-icon" color='white'/>
+                    <span style={{fontWeight: 'bold', color:'white',fontSize: '15px'}}>Log in with Facebook</span>
+                  </Button>
+              </Form.Item>
+
+              <div className="label-or-container" style={{marginBottom: '25px'}}>
+                <div className="line-label"></div>
+                <label className="label-or">OR</label>
+                <div className="line-label"></div>
+              </div>
+
               <Form.Item
                 name='phone'
                 hasFeedback={isLoading}
                 validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
-                  { required: true, message: '• Số điện thoại là bắt buộc' },
+                  { required: true, message: '• Phone number is required' },
                 ]}
               >
-                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Số điện thoại...' />
+                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Mobile number' />
               </Form.Item>
               <Form.Item
                 name='name'
                 hasFeedback={isLoading}
                 validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
-                  { required: true, message: '• Tên người dùng là bắt buộc' },
+                  { required: true, message: '• Full Name is required' },
                 ]}
               >
-                <Input prefix={<BsPeople size={22}/>} placeholder='Tên của bạn...' />
+                <Input prefix={<FaSignature size={22}/>} placeholder='Full Name' />
               </Form.Item>
 
-              <Form.Item name='role'>
-                <Checkbox.Group>
-                  <Row> 
-                    <Row> <Checkbox value="agency">{<FaCarAlt/>}   Agency (Mặc định là đối tác Pipcar)       </Checkbox> </Row>
-                    <Row> <Checkbox value="driver">{<FaCarAlt/>}   Driver (Đăng ký là lái xe)                </Checkbox> </Row>
-                    <Row> <Checkbox value="trans"> {<FaBuilding/>} Transportation (Đăng ký chức năng vận tải)</Checkbox> </Row>
-                    <Row> <Checkbox value="owner"> {<FaBuilding/>} Owner (Đăng ký lái xe kiêm chủ xe)        </Checkbox> </Row>
-                  </Row>
-                </Checkbox.Group>
+              <Form.Item
+                name='username'
+                hasFeedback={isLoading}
+                validateStatus={isLoading ? 'validating' : undefined}
+                rules={[
+                  { required: true, message: '• User name is required' },
+                ]}
+              >
+                <Input prefix={<BsPeople size={22}/>} placeholder='User name' />
               </Form.Item>
                 
+              <Form.Item
+                name='password'
+                hasFeedback={isLoading}
+                validateStatus={isLoading ? 'validating' : undefined}
+                rules={[
+                  { required: true, message: '• Password is required' },
+                ]}
+              >
+                <Input prefix={<FaLock />} placeholder='Password' />
+              </Form.Item>
+
+              <div style={{textAlign: 'center',fontSize: '12px',margin: '10px'}}>
+                <span >People who use our service may have uploaded your contact information to Instagram.&nbsp;
+                   <a href="https://www.facebook.com/help/instagram/261704639352628">Learn more.</a> 
+                </span>
+                <br></br>
+                <br></br>
+                <span >By signing up, you agree to our&nbsp;
+                  <a>Terms</a>&nbsp;,&nbsp;<a>Privacy Policy</a> &nbsp;and&nbsp;<a>Cookies Policy</a>.</span>
+              </div>
               <Form.Item>
-                <Button type='primary' htmlType='submit' block>
-                  Đăng ký
+                <Button  htmlType='submit' block style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
+                  <span style={{fontSize: '14px',fontWeight: 'bold',color: 'white'}}>Sign up</span>
                 </Button>
               </Form.Item>
-              <div className='switch-state'>
-                Đã có tài khoản?_
-                <div className='change-btn' onClick={() => setSignUp(false)}>
-                  Đăng nhập ngay
-                </div>
-              </div>
             </Form>
           }
         </Card>
+        <Card className='card-signup'>
+          <div className='signup-container'>
+            <div className='switch-state'>
+                {signUp ? 'Have an account?': 'Don'+"'t"+ ' have an account?'}
+                &nbsp;
+                <div className='change-btn' onClick={() => setSignUp(!signUp)}>
+                {signUp ? 'Login              ': 'Sign up'}
+                </div>
+            </div>
+          </div>
+        </Card>
+        <div className='get-app-container'>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px'}}>
+             <span>Get the app</span>
+          </div>
+          <div className='get-app-container_img-container'>
+              <Link href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD3643E85-E336-40AD-8324-1F119EBE44A7%26utm_content%3Dlo%26utm_medium%3Dbadge">
+                <img alt="Get it on Google Play" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png"/>
+              </Link>
+              <Link href="ms-windows-store://pdp/?productid=9nblggh5l9xt&referrer=appbadge&source=www.instagram.com&mode=mini&pos=0%2C0%2C2560%2C1392"> 
+                <img alt="Get it from Microsoft" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png"/>
+              </Link>
+          </div>
+        </div>
       </div>
 
       <footer className="footer">
         <div className="links">
-          <a href='https://info.pippip.vn/' target='_blank' rel='noreferrer'>
-            Về Pippip
+          <a href="https://about.meta.com/" target='_blank' rel='noreferrer'>
+            Meta
           </a>
           <a
-            href='https://docs.google.com/document/d/1o2vT3psHEXMvtx_vgyOrvP0UcuxMJVDFrSf5U1PDvVY/edit?usp=sharing'
+            href="https://about.instagram.com/"
             target='_blank'
             rel='noreferrer'
           >
-            Chính sách tuyển dụng lái xe
+            About
           </a>
           <a
-            href='https://docs.google.com/document/d/1m201PmIjYD5X-OaCN1ce3M7yevL1A8Xu47i6Zs07W-M/edit?usp=sharing'
+            href='https://about.instagram.com/blog/'
             target='_blank'
             rel='noreferrer'
           >
-            Điều khoản sử dụng dịch vụ
+            Blog
           </a>
           <a
-            href='https://docs.google.com/document/d/12_x1PTXsrZlJt5h83NeVOyIk7zs49moXX4Jge4lj-2Q/edit?usp=sharing'
+            href='https://about.instagram.com/about-us/careers'
             target='_blank'
             rel='noreferrer'
           >
-            Điều khoản nhà cung cấp
+            Jobs
+          </a>
+          <a
+            href='https://help.instagram.com/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Help
+          </a>
+          <a
+            href='https://developers.facebook.com/docs/instagram'
+            target='_blank'
+            rel='noreferrer'
+          >
+            API
+          </a>
+          <a
+            href='https://privacycenter.instagram.com/policy/?entry_point=ig_help_center_data_policy_redirect'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Privacy
+          </a>
+          <a
+            href='https://help.instagram.com/581066165581870/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Terms
+          </a>
+          <a
+            href='https://www.instagram.com/directory/profiles/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Top Accounts
+          </a>
+          <a
+            href='https://www.instagram.com/explore/locations/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Locations
+          </a>
+          <a
+            href='https://www.instagram.com/web/lite/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Instagram Lite
+          </a>
+          <a
+            href='https://www.facebook.com/help/instagram/261704639352628'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Contact Uploading & Non-Users
+          </a>
+          <a
+            href='https://about.meta.com/technologies/meta-verified/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Meta Verified
           </a>
         </div>
 
-        <div className='copyright'>© {new Date().getFullYear()} Pippip. All rights reserved.</div>
+        <div className='copyright'>© {new Date().getFullYear()} Instagram from Meta</div>
       </footer>
     </PageWrapper>
   )
@@ -194,12 +342,14 @@ const PageWrapper = styled(Layout)`
   overflow: hidden;
 
   .switch-state {
+    display: flex;
+    justify-content: center;
     text-align: center;
     white-space: pre-wrap;
     .change-btn {
       display: inline;
-      text-decoration: underline;
-      color: blue;
+      color: #0095f6;
+      font-weight: bold;
     }
     .change-btn:hover {
       cursor: pointer;
@@ -213,7 +363,7 @@ const PageWrapper = styled(Layout)`
     flex-wrap: nowrap;
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
   }
   .slide-container {
     background-image: url('/iphone.png');
@@ -256,7 +406,7 @@ const PageWrapper = styled(Layout)`
     width: 100%;
     max-width: 400px;
     height: 100%;
-    max-height: 500px;
+    max-height: 700px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -310,6 +460,77 @@ const PageWrapper = styled(Layout)`
     font-size: 13px;
     line-height: 18px;
     text-align: center;
+  }
+  .label-or-container {
+    display : flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .line-label {
+    height: 1px;
+    width: 45%;
+    border-bottom: 1px solid #CCCCCC;
+  }
+  .label-or {
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #8c8c8c;
+  }
+  .facebook-icon {
+    display: inline-block;
+  }
+  .login-facebook-container {
+    display: flex;
+    justify-content: center;
+    align-item: center;
+    padding-top: 20px;
+  }
+  .forgot-password-container {
+    display: flex;
+    justify-content: center;
+    align-item: center;
+    margin: 20px;
+  }
+  .img-instagram {
+    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/yS/r/ajlEU-wEDyo.png);
+    background-position: 0px -52px;
+    background-size: auto;
+    width: 175px;
+    height: 51px;
+    background-repeat: no-repeat;
+    display: inline-block;
+  }
+  .img-instagram-container {
+    display: flex;
+    justify-content: center;
+    align-item: center;
+    margin-bottom: 40px;
+  }
+  .signup-container {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    margin-left: 20px;
+    margin-right: 130px;
+  }
+  .card-signup {
+    margin: 20px;
+  }
+  .img {
+    height: 40px;
+    margin: 10px;
+  }
+  .get-app-container {
+    
+  }
+  .get-app-container_img-container {
+
   }
   @media screen and (max-width: 767.98px) {
     .form-container .ant-card-body {
