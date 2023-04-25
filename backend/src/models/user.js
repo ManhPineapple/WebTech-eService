@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
     },
+    ID_fb: DataTypes.INTEGER,
     fullname: DataTypes.STRING(45),
     username: DataTypes.STRING(45),
     email: DataTypes.STRING(45),

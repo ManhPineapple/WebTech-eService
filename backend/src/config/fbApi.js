@@ -1,6 +1,5 @@
 import passport from "passport";
 import Strategy from "passport-facebook";
-// import db from "../models";
 import config from "./fbApiConfig.json";
 
 passport.serializeUser((user, done) => {
@@ -17,9 +16,8 @@ passport.use(new Strategy({
   callbackURL: config.callback_url,
 },
 (accessToken, refreshToken, profile, done) => {
-  process.nextTick(() => {
+  process.nextTick( async() => {
     console.log(accessToken, refreshToken, profile);
-    // const user = db.User.findOne();
     return done(null, profile);
   });
 }

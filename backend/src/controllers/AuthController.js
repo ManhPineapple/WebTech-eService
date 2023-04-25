@@ -46,12 +46,12 @@ const authController = {
                 where: {email: req.body.email}
             })
 
-            if (dbUser)
+            if (dbUser) {
                 return res.status(500).json({
                     status: false,
                     message: 'User is already existed'
                 })
-
+            }
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(req.body.password, salt);
             const user = await db.User.create({
@@ -161,6 +161,24 @@ const authController = {
             message: 'Logout Successfully'
         })
     },
+
+    async facebook(req, res) {
+        const dbUser = await db.User.findOne({
+            where: {ID_fb: req.user.id}
+        })
+        if (dbUser) {
+            req.user.id = dbUser.ID_User;
+            const accessToken = authController.generateAccessToken(dbUser);
+            const refreshToken = authController.generateRefreshToken(dbUser);
+            res.cookie("accessToken", accessToken, {
+                httpOnly: true,
+            });
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+            });
+            return res.json({message: "Login successfully, redirect to homepage"})
+        } else return res.json({message: "Redirect to register", ID_fb: req.user.id});
+    }
 }
 
 export default authController;

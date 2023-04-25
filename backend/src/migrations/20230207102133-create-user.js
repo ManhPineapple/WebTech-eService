@@ -10,6 +10,9 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
+      ID_fb: {
+        type: Sequelize.INTEGER,
+      },
       fullname: {
         type: Sequelize.STRING,
         allowNull: false

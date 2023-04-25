@@ -12,7 +12,7 @@ const authMiddleware = {
                     });
                 }
                 req.user = user;
-                // next();
+                next();
             })
         }
         else {

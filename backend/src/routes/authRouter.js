@@ -9,13 +9,7 @@ authRouter.post('/login', authController.login);
 authRouter.post('/logout', authController.logout);
 authRouter.post('/refreshToken', authController.refreshToken);
 
-authRouter.get('/facebook', passport.authenticate('facebook', {
-  failureRedirect: '/auth/facebook/fail', 
-  successRedirect: '/auth/facebook/success'
-}));
-
-authRouter.get('/facebook/success', (req, res) => {res.json({status: true})})
-authRouter.get('/facebook/fail', (req, res) => {res.json({status: false})})
+authRouter.get('/facebook', passport.authenticate('facebook', {scope: ['email']}), authController.facebook);
 // Example: How to use authMiddleware
 
 // authRouter.get('/test_middleware_user', authMiddleware.verifyAdmin, (req, res) => {
