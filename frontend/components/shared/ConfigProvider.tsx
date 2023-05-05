@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { App, ConfigProvider as AntdConfigProvider, theme } from 'antd';
+import { ConfigProvider as AntdConfigProvider, App, theme } from 'antd';
 import { Suspense } from 'react';
 import { useAppSelector } from 'src/redux/store';
 import Loader from '../loader/Loader';

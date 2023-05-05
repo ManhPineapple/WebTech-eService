@@ -1,59 +1,39 @@
+/* eslint-disable @next/next/no-img-element */
 import styled from '@emotion/styled';
-import { Button, Card, Form, Input, Layout, Checkbox, Row } from 'antd';
+import { Button, Card, Form, Input, Layout } from 'antd';
+import Link from 'next/link';
 import { useState } from "react";
 import WithoutAuth from 'src/hooks/withoutAuth';
 import { useLoginMutation } from '../redux/query/auth.query';
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import useApp from 'src/hooks/useApp';
-import Link from 'next/link';
 
-import { FaBuilding, FaCarAlt, FaLock, FaPhoneAlt,FaSignature} from 'react-icons/fa';
-import {AiFillFacebook} from 'react-icons/ai'
+import { AiFillFacebook } from 'react-icons/ai';
 import { BsPeople } from 'react-icons/bs';
+import { FaLock, FaPhoneAlt, FaSignature } from 'react-icons/fa';
 import { useRegisterMutation } from 'src/redux/query/register.query';
-import { setUser } from 'src/redux/reducer/user.reducer';
-import { relative } from 'path';
 
 function LoginPage() {
-  const [signUp, setSignUp] = useState(false);
-
-  const { notification } = useApp();
-  const dispatch = useAppDispatch();
+  const [signUp, setSignUp] = useState(false)
   const [form] = Form.useForm();
 
   const [loginMutate, { isLoading }] = useLoginMutation();
 
-  const handleLogin = (formData: any) => {  
+  const handleLogin = (formData: any) => {
     loginMutate(formData)
       .unwrap()
       .then(({ data, message }) => {
-        dispatch(setUser(data));
-        notification.success({ message, placement: 'bottomLeft' });
+        alert(message);
       })
-      .catch((err) => {
-
-      });
   };
 
-  const [agencyRegisterMutate] = useRegisterMutation();
+  const [registerMutate] = useRegisterMutation();
 
   const handleSignUp = (formData: any) => {
-    const arr = formData.role;
-    formData.isTransportation = false; formData.isDriver = false;
-    for (const key in arr) {
-      if (arr[key] === 'owner') {formData.isTransportation = true; formData.isDriver = true;}
-      if (arr[key] === 'trans') {formData.isTransportation = true;}
-      if (arr[key] === 'driver') {formData.isDriver = true;}
-    }
-    delete formData.role;    
-    agencyRegisterMutate(formData).unwrap()
-    .then(({ data, message }) => {
-      notification.success({ message, placement: 'bottomLeft' });
-      setSignUp(false);
-    })
-    .catch((err) => {
-
-    });
+    formData.email = "";
+    registerMutate(formData)
+      .unwrap().then(({ data, message }) => {
+        alert(message);
+      })
+    console.log(formData);
   };
 
   return (
@@ -75,17 +55,13 @@ function LoginPage() {
                     className='img-instagram'></i>
               </div>
               <Form.Item
-                name='phone_number'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
-                rules={[{ required: true, message: '• Số điện thoại là bắt buộc' }]}
+                name='username'
+                rules={[{ required: true, message: '• Trường này là bắt buộc' }]}
               >
-                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Phonenumber' />
+                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Phone number, username, or email' />
               </Form.Item>
               <Form.Item
                 name='password'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
                   { required: true, message: '• Mật khẩu là bắt buộc' },
                 ]}
@@ -142,10 +118,10 @@ function LoginPage() {
               </div> 
 
               <Form.Item>
-                  <Button block className="login-facebook-container" style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
-                    <AiFillFacebook size={25} className="facebook-icon" color='white'/>
-                    <span style={{fontWeight: 'bold', color:'white',fontSize: '15px'}}>Log in with Facebook</span>
-                  </Button>
+                <Button block className="login-facebook-container" style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
+                  <AiFillFacebook size={25} className="facebook-icon" color='white'/>
+                  <span style={{fontWeight: 'bold', color:'white',fontSize: '15px'}}>Log in with Facebook</span>
+                </Button>
               </Form.Item>
 
               <div className="label-or-container" style={{marginBottom: '25px'}}>
@@ -155,9 +131,7 @@ function LoginPage() {
               </div>
 
               <Form.Item
-                name='phone'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
+                name='phone_number'
                 rules={[
                   { required: true, message: '• Phone number is required' },
                 ]}
@@ -165,9 +139,7 @@ function LoginPage() {
                 <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Mobile number' />
               </Form.Item>
               <Form.Item
-                name='name'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
+                name='fullname'
                 rules={[
                   { required: true, message: '• Full Name is required' },
                 ]}
@@ -177,8 +149,6 @@ function LoginPage() {
 
               <Form.Item
                 name='username'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
                   { required: true, message: '• User name is required' },
                 ]}
@@ -188,13 +158,11 @@ function LoginPage() {
                 
               <Form.Item
                 name='password'
-                hasFeedback={isLoading}
-                validateStatus={isLoading ? 'validating' : undefined}
                 rules={[
                   { required: true, message: '• Password is required' },
                 ]}
               >
-                <Input prefix={<FaLock />} placeholder='Password' />
+                <Input.Password prefix={<FaLock />} placeholder='Password' />
               </Form.Item>
 
               <div style={{textAlign: 'center',fontSize: '12px',margin: '10px'}}>
@@ -227,15 +195,15 @@ function LoginPage() {
         </Card>
         <div className='get-app-container'>
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px'}}>
-             <span>Get the app</span>
+            <span>Get the app</span>
           </div>
           <div className='get-app-container_img-container'>
-              <Link href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD3643E85-E336-40AD-8324-1F119EBE44A7%26utm_content%3Dlo%26utm_medium%3Dbadge">
+              <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD3643E85-E336-40AD-8324-1F119EBE44A7%26utm_content%3Dlo%26utm_medium%3Dbadge">
                 <img alt="Get it on Google Play" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png"/>
-              </Link>
-              <Link href="ms-windows-store://pdp/?productid=9nblggh5l9xt&referrer=appbadge&source=www.instagram.com&mode=mini&pos=0%2C0%2C2560%2C1392"> 
+              </a>
+              <a href="ms-windows-store://pdp/?productid=9nblggh5l9xt&referrer=appbadge&source=www.instagram.com&mode=mini&pos=0%2C0%2C2560%2C1392"> 
                 <img alt="Get it from Microsoft" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png"/>
-              </Link>
+              </a>
           </div>
         </div>
       </div>
@@ -339,7 +307,6 @@ function LoginPage() {
 
 const PageWrapper = styled(Layout)`
   height: 100vh;
-  overflow: hidden;
 
   .switch-state {
     display: flex;
@@ -364,41 +331,6 @@ const PageWrapper = styled(Layout)`
     display: flex;
     justify-content: center;
     flex-direction: column;
-  }
-  .slide-container {
-    background-image: url('/iphone.png');
-    background-position: -46px 0;
-    background-size: 468.32px 634.15px;
-    background-repeat: no-repeat;
-    width: 380.32px;
-    margin-right: 32px;
-    z-index: 0;
-  }
-  .ant-carousel {
-    width: 258px;
-    margin-right: 14px;
-    margin-left: auto;
-  }
-  .slide-carousel {
-    height: 558.15px;
-    width: 258px;
-    margin-top: 24px;
-    z-index: 0;
-  }
-  .slide-image {
-    position: relative;
-    height: 545.15px;
-    width: 258px;
-    border-radius: 24px;
-    overflow: hidden;
-    & img {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      object-fit: cover;
-    }
   }
 
   .form-container {
@@ -482,13 +414,11 @@ const PageWrapper = styled(Layout)`
   .login-facebook-container {
     display: flex;
     justify-content: center;
-    align-item: center;
     padding-top: 20px;
   }
   .forgot-password-container {
     display: flex;
     justify-content: center;
-    align-item: center;
     margin: 20px;
   }
   .img-instagram {
@@ -503,7 +433,6 @@ const PageWrapper = styled(Layout)`
   .img-instagram-container {
     display: flex;
     justify-content: center;
-    align-item: center;
     margin-bottom: 40px;
   }
   .signup-container {
