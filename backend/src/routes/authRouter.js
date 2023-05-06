@@ -6,8 +6,8 @@ const authRouter = express.Router();
 
 authRouter.post('/register', authController.register);  
 authRouter.post('/login', authController.login);
-authRouter.post('/logout', authController.logout);
-authRouter.post('/refreshToken', authController.refreshToken);
+authRouter.get('/logout', authController.logout);
+authRouter.get('/refreshToken', authController.refreshToken);
 
 authRouter.get('/facebook', passport.authenticate('facebook', {scope: ['email']}), authController.facebook);
 // Example: How to use authMiddleware

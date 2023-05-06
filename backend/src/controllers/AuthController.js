@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import emailValidator from "email-validator";
 import jwt from "jsonwebtoken";
 import db from '../models/index.js';
 
@@ -29,21 +28,24 @@ const authController = {
     },
 
     async register(req, res) {
+        console.log(req.body);
         try {
-            if (!req.body.username || !req.body.password || !req.body.fullname || !(req.body.email || req.body.phone_number))
+            if (!req.body.username || !req.body.password || !req.body.fullname || !(req.body.email || req.body.phone_number)) {
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
-                })
-            
-            if (!emailValidator.validate(req.body.email))
+                }) 
+            }
+                
+            if (req.body.email) if (!emailValidator.validate(req.body.email)) {
                 return res.status(500).json({
                     status: false,
                     message: 'Email is invalid'
                 })
+            }
 
             const dbUser = await db.User.findOne({
-                where: {email: req.body.email}
+                where: {username: req.body.username}
             })
 
             if (dbUser) {
@@ -68,20 +70,21 @@ const authController = {
                 message: 'Register Successfully'
             });
         } catch (error) {
-            return res.status(500).json({status:false, message: ""});
+            console.log(error);
+            return res.status(500).json({status:false, message: "error"});
         }
     },
 
     async login(req, res) {
         try {
-            if (!req.body.phone_number || !req.body.password)
+            if (!req.body.username || !req.body.password)
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
 
             const user = await db.User.findOne({
-                where: {phone_number: req.body.phone_number}
+                where: {username: req.body.username}
             })
 
             if (!user)
@@ -117,7 +120,7 @@ const authController = {
                     message: 'Wrong username or password'
                 })
         } catch (error) {
-            return res.status(500).json({status:true});
+            return res.status(500).json({status:false, message: ""});
         }
     },
 
