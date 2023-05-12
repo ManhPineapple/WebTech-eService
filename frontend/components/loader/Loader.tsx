@@ -32,7 +32,6 @@ const Loader = () => {
   return (
     <ModalWrapper>
       <div className='modal-container'>
-        {/* <LogoSvg width={120} height={120} color={colorPrimary} /> */}
       </div>
     </ModalWrapper>
   );

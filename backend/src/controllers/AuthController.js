@@ -76,28 +76,30 @@ const authController = {
     },
 
     async login(req, res) {
+        console.log(req.body)
         try {
+            console.log('run try')
             if (!req.body.username || !req.body.password)
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
-
+            console.log(' try 2')
             const user = await db.User.findOne({
                 where: {username: req.body.username}
             })
-
+            console.log('try 3')
             if (!user)
                 return res.status(500).json({
                     status: false,
                     message: 'Wrong username or password'
                 })
-
+            console.log('try 4')
             const validPassword = await bcrypt.compare(
                 req.body.password,
                 user.password
             );
-
+            console.log('try 5')
             if (validPassword)
             {
                 const accessToken = authController.generateAccessToken(user);
