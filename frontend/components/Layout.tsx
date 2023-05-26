@@ -33,9 +33,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
                       className='img-instagram'></i>
               </div>
             </div>
-            {/* header (instagram) */}
-
-            <MenuNav />
             <Button
               className='collapse-button'
               shape='circle'
@@ -48,13 +45,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
               }
               onClick={() => dispatch(setSiderCollapsed(!isSiderCollapsed))}
             ></Button>
+            <MenuNav />
+            
             <Dropdown collapsed={isSiderCollapsed} />
-
-            {/* footer(logout...) */}
           </AntdLayout.Sider>
       </Affix>
-
-
     </LayoutWrapper>
   );
 };
@@ -73,7 +68,7 @@ const LayoutWrapper = styled.main`
     margin-left: 40px;
   }
   .collapse-button {
-    margin-top: 10px;
+    margin-top: 25px;
     margin-left: 27px;
   }
 `;

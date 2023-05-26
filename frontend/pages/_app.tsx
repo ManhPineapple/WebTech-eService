@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic';
 import NextNProgress from 'nextjs-progressbar';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import Loader from '../components/loader/Loader';
 import { persistor, store } from 'src/redux/store';
+import Loader from '../components/Loader';
 import '../styles/globals.css';
 
-const ConfigProvider = dynamic(() => import('src/components/shared/ConfigProvider'), {
+const ConfigProvider = dynamic(() => import('src/components/ConfigProvider'), {
   loading: () => <Loader />,
 });
 

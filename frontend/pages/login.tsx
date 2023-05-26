@@ -9,8 +9,8 @@ import { useLoginMutation } from '../redux/query/auth.query';
 import { AiFillFacebook } from 'react-icons/ai';
 import { BsPeople } from 'react-icons/bs';
 import { FaLock, FaPhoneAlt, FaSignature } from 'react-icons/fa';
-import { useRegisterMutation } from 'src/redux/query/register.query';
-
+import { useRegisterMutation } from 'src/redux/query/auth.query';
+ 
 function LoginPage() {
   const [signUp, setSignUp] = useState(false)
   const [form] = Form.useForm();
@@ -32,8 +32,11 @@ function LoginPage() {
     registerMutate(formData)
       .unwrap().then(({ data, message }) => {
         alert(message);
+        setSignUp(false);
       })
-    console.log(formData);
+      .catch(({data, message}) => {
+        alert(message)
+      })
   };
 
   return (

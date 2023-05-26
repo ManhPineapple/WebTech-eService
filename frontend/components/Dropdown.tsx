@@ -2,13 +2,12 @@ import styled from '@emotion/styled';
 import { Dropdown, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { BsGear } from 'react-icons/bs';
+import { BsGear, BsList } from 'react-icons/bs';
 import { FaRegMoon } from 'react-icons/fa';
 import { ImSun } from 'react-icons/im';
 import useLogout from 'src/hooks/useLogout';
 import { toggleThemeMode } from 'src/redux/reducer/theme.reducer';
 import { useAppDispatch, useAppSelector } from 'src/redux/store';
-import {BsList} from 'react-icons/bs'
 
 function UserDropdown({ collapsed }: { collapsed?: boolean }) {
   const { mode } = useAppSelector((s) => s.theme);
@@ -75,7 +74,7 @@ function UserDropdown({ collapsed }: { collapsed?: boolean }) {
 }
 
 const DropdownReference = styled.div`
-    margin-top: 550px;
+    margin-top: 25px;
     margin-left: 25px;
     .cover-icon {
       display: flex;

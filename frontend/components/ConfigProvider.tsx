@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { ConfigProvider as AntdConfigProvider, App, theme } from 'antd';
 import { Suspense } from 'react';
 import { useAppSelector } from 'src/redux/store';
-import Loader from '../loader/Loader';
+import Loader from './Loader';
 
 type TConfigProviderProps = {
   children: React.ReactNode;

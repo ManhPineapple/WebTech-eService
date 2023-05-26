@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { TUser } from 'src/types/user.types';
 import { TResponse } from '../../types/response.types';
 import baseQuery from '../app/baseQuery';
-import { TUser } from 'src/types/user.types';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -16,6 +16,12 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['Auth'],
     }),
+    loginFacebook: builder.mutation<TResponse, any>({
+      query: () => ({
+        url: '/auth/facebook',
+        method: 'get',
+      })
+    }),
     logout: builder.mutation<TResponse<any>, void>({
       query: () => ({
         url: '/auth/logout',
@@ -23,6 +29,13 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['Auth'],
     }),
+    register: builder.mutation<TResponse, {data: TUser}>({
+      query: (data) => ({
+        url: `/auth/register`,
+        method: 'post',
+        data,
+      }),
+    }),
   }),
 });
-export const { useLoginMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useLoginFacebookMutation } = authApi;

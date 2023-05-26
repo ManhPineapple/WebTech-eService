@@ -5,7 +5,6 @@ import { getPersistConfig } from 'redux-deep-persist';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authApi } from './query/auth.query';
-import { registerApi } from './query/register.query';
 import { userApi } from './query/user.query';
 
 import authReducer, { setRefreshToken } from './reducer/auth.reducer';
@@ -20,7 +19,6 @@ const reducers = combineReducers({
   visible: visibleReducer,
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
-  [registerApi.reducerPath]: registerApi.reducer,
 });
 
 const persistReducerConfig = getPersistConfig({
@@ -31,8 +29,7 @@ const persistReducerConfig = getPersistConfig({
     'auth.refreshToken',
     'visible.isSiderCollapsed',
     'theme',
-    'user.data.role',
-    'user.data.status',
+    'user.data.username',
   ],
   rootReducer: reducers,
 });
@@ -58,7 +55,6 @@ export const store = configureStore({
     gDM({ serializableCheck: false }).concat(
       authApi.middleware,
       userApi.middleware,
-      registerApi.middleware,
       rtkQueryErrorLogger,
     ),
   devTools: process.env.NODE_ENV !== 'production',

@@ -3,14 +3,12 @@ import { Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { StrictMode } from 'react';
-import { BsPeople, BsSearch } from 'react-icons/bs';
-import { RxMagnifyingGlass } from 'react-icons/rx';
-import {AiFillHome,AiOutlineHeart} from 'react-icons/ai'
-import {MdOutlineExplore} from 'react-icons/md'
-import {BiMoviePlay} from 'react-icons/bi'
-import {TiLocationArrowOutline} from 'react-icons/ti'
-import {MdOutlineAddBox} from 'react-icons/md'
-import {CgProfile} from 'react-icons/cg'
+import { AiFillHome, AiOutlineHeart } from 'react-icons/ai';
+import { BiMoviePlay } from 'react-icons/bi';
+import { BsSearch } from 'react-icons/bs';
+import { CgProfile } from 'react-icons/cg';
+import { MdOutlineAddBox, MdOutlineExplore } from 'react-icons/md';
+import { TiLocationArrowOutline } from 'react-icons/ti';
 
 export const items: Required<MenuProps>['items'] = [
   { 
