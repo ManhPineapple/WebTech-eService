@@ -2,6 +2,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import db from '../models/index.js';
 
+export const mailOptions = (to, link) => {
+    return {
+        from: 'manh.tv0911@gmail.com',
+        to,
+        subject: 'Change Password Request',
+        text: `Click the following link to reset password. If you don't request any password change, ignore this email. ${link}`
+    }
+};
+
 const authController = {
     generateAccessToken(user) {
         return jwt.sign(
@@ -28,16 +37,16 @@ const authController = {
     },
 
     async register(req, res) {
-        console.log(req.body);
+        const { username, password, fullname, email } = req.body;
         try {
-            if (!req.body.username || !req.body.password || !req.body.fullname || !(req.body.email || req.body.phone_number)) {
+            if (!username || !password || !fullname || !email) {
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 }) 
             }
                 
-            if (req.body.email) if (!emailValidator.validate(req.body.email)) {
+            if (email) if (!emailValidator.validate(req.body.email)) {
                 return res.status(500).json({
                     status: false,
                     message: 'Email is invalid'
@@ -45,7 +54,7 @@ const authController = {
             }
 
             const dbUser = await db.User.findOne({
-                where: {username: req.body.username}
+                where: {username: username}
             })
 
             if (dbUser) {
@@ -57,6 +66,7 @@ const authController = {
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(req.body.password, salt);
             const user = await db.User.create({
+                username: req.body.username,
                 fullname: req.body.fullname,
                 email: req.body.email,
                 phone_number: req.body.phone_number,
@@ -76,30 +86,24 @@ const authController = {
     },
 
     async login(req, res) {
-        console.log(req.body)
         try {
-            console.log('run try')
             if (!req.body.username || !req.body.password)
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
-            console.log(' try 2')
             const user = await db.User.findOne({
                 where: {username: req.body.username}
             })
-            console.log('try 3')
             if (!user)
                 return res.status(500).json({
                     status: false,
                     message: 'Wrong username or password'
                 })
-            console.log('try 4')
             const validPassword = await bcrypt.compare(
                 req.body.password,
                 user.password
             );
-            console.log('try 5')
             if (validPassword)
             {
                 const accessToken = authController.generateAccessToken(user);
@@ -183,6 +187,75 @@ const authController = {
             });
             return res.json({message: "Login successfully, redirect to homepage"})
         } else return res.json({message: "Redirect to register", ID_fb: req.user.id});
+    },
+
+    async passwordChange(req, res) {
+        const { username, oldPassword, newPassword} = req.body;
+
+        const user = await db.User.findOne({
+            where: {username: username}
+        })
+
+        const validPassword = await bcrypt.compare(
+            oldPassword,
+            user.password
+        );
+        if (validPassword) {
+            await db.User.update(
+            {
+                password: newPassword    
+            },
+            {
+                where: {username: username}
+            })
+            return res.status(200).json({
+                status: true,
+                message: 'Password change successfully'
+            })
+        } else {
+            return res.status(500).json({
+                status: false,
+                message: 'Wrong password'
+            })
+        } 
+    },
+    
+    async passwordResetRequest(req, res) {
+        const { username } = req.body;
+        const user = await db.User.findOne({
+            where: {username: username}
+        });
+
+        if (user) {
+            const token = this.generateAccessToken(user);
+            const rsPasswordlink = `http://localhost:3000/reset-password?token=${token}`;
+            transporter.sendMail(mailOptions(user.email, ), function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
+        } else return res.status(200).json({
+            message: `User doesn't exist`
+        })
+    },
+
+    async passwordReset (req, res) {
+        const { token, newPassword } = req.body;
+        let userId;
+        jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user) => {
+            userId = user.id;
+        })
+
+        await db.User.update(
+        {
+            password: newPassword    
+        },
+        {
+            where: {ID_User: userId}
+        })
+        return res.status(200);
     }
 }
 
