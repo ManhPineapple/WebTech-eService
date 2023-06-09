@@ -8,8 +8,13 @@ authRouter.post('/register', authController.register);
 authRouter.post('/login', authController.login);
 authRouter.get('/logout', authController.logout);
 authRouter.get('/refreshToken', authController.refreshToken);
+authRouter.post('password-change', authController.passwordChange);
 
-authRouter.get('/facebook', passport.authenticate('facebook', {scope: ['email']}), authController.facebook);
+authRouter.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
+authRouter.get('/facebook/callback',
+  passport.authenticate('facebook'),
+  authController.facebook
+);
 // Example: How to use authMiddleware
 
 // authRouter.get('/test_middleware_user', authMiddleware.verifyAdmin, (req, res) => {

@@ -3,8 +3,17 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import session from "express-session";
+import nodemailer from 'nodemailer';
 import passport from './config/fbApi.js';
 import route from './routes/index.js';
+
+export const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.NODEMAILER_EMAIL,
+      pass: process.env.NODEMAILER_PASS
+    }
+});
 
 dotenv.config();
 const app = express();
