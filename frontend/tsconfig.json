@@ -27,6 +27,6 @@
       "src/utils/*": ["utils/*"]
     }
   },
-  "include": ["types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/account/edit/[iduser].js", "components/Post/Post.js"],
   "exclude": ["node_modules"]
 }

@@ -24,18 +24,6 @@ export const items: Required<MenuProps>['items'] = [
     className: 'side-menu-item',
   },
   {
-    label: <Link className='linkMenu' href='/'>Explore</Link>,
-    icon: <MdOutlineExplore size={26} color='black'/>,
-    key: '/',
-    className: 'side-menu-item',
-  },
-  {
-    label: <Link className='linkMenu' href='/'>Reels</Link>,
-    icon: <BiMoviePlay size={26} color='black'/>,
-    key: '/',
-    className: 'side-menu-item',
-  },
-  {
     label: <Link className='linkMenu' href='/'>Message</Link>,
     icon: <TiLocationArrowOutline size={26} color='black'/>,
     key: '/',

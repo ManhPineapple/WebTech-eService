@@ -3,6 +3,7 @@ import { ComponentType } from 'react';
 import Layout from 'src/components/Layout';
 import { useAppSelector } from 'src/redux/store';
 import Navigate from './Navigate';
+import HomePage from 'src/components/HomePage';
 
 type IntrinsicAttributes = EmotionJSX.IntrinsicAttributes;
 
@@ -12,12 +13,13 @@ function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType
       userState: s.user.data,
     }));
     
-    if (userState?.username === undefined) return <Navigate to='/login' />;
+    // if (userState?.username === undefined) return <Navigate to='/login' />;
     
     return (
-      <Layout>
-        <WrappedComponent {...props} />
-      </Layout>
+      // <Layout>
+      //   <WrappedComponent {...props} />
+      // </Layout>
+      <HomePage />
     );
   };
 }
