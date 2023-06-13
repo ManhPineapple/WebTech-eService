@@ -29,12 +29,11 @@ function EditProfile() {
   return (
     <Wrapper>
       <Container>
-        <Title>Edit Profile</Title>
         <Form onSubmit={handleSubmit}>
-          <Label>Name</Label>
+          <Label>Username</Label>
           <Input type="text" value={name} onChange={handleNameChange} />
 
-          <Label>Username</Label>
+          <Label>Gender</Label>
           <Input type="text" value={username} onChange={handleUsernameChange} />
 
           <Label>Bio</Label>
@@ -49,17 +48,13 @@ function EditProfile() {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  height: 40vh;
 `;
 
 const Container = styled.div`
-  max-width: 400px;
   padding: 20px;
   background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 `;
 
 const Title = styled.h2`
@@ -84,6 +79,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 16px;
+  width: 100%;
 `;
 
 const Textarea = styled.textarea`
@@ -93,6 +89,7 @@ const Textarea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 16px;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -103,6 +100,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 60px;
 `;
 
 export default EditProfile;

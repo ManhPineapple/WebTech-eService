@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import MenuNav from "src/components/MenuNav";
 import Layout from "src/components/Layout";
 import EditProfile from "src/components/EditProfile"
+import ChangePassword from "src/components/ChangePassword"
 
 function Settings() {
   const [name, setName] = useState("");
@@ -39,8 +40,6 @@ function Settings() {
     switch (activeTab) {
       case "edit":
         return <EditContent />;
-      case "appAndWebsite":
-        return <AppAndWebsiteContent />;
       case "privacyAndSecurity":
         return <PrivacyAndSecurityContent />;
       default:
@@ -62,11 +61,8 @@ function Settings() {
               <NavItem active={activeTab === "edit"} onClick={() => handleTabChange("edit")}>
                 Edit Profile
               </NavItem>
-              <NavItem active={activeTab === "appAndWebsite"} onClick={() => handleTabChange("appAndWebsite")}>
-                App and Website
-              </NavItem>
               <NavItem active={activeTab === "privacyAndSecurity"} onClick={() => handleTabChange("privacyAndSecurity")}>
-                Privacy and Security
+                Change password
               </NavItem>
             </Navbar>
             {renderContent()}
@@ -130,17 +126,10 @@ const EditContent = () => (
   </div>
 );
 
-const AppAndWebsiteContent = () => (
-  <div>
-    <h2>App and Website</h2>
-    {/* Content of App and Website tab */}
-  </div>
-);
 
 const PrivacyAndSecurityContent = () => (
   <div>
-    <h2>Privacy and Security</h2>
-    {/* Content of Privacy and Security tab */}
+    <ChangePassword />
   </div>
 );
 
