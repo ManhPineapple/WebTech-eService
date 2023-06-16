@@ -67,7 +67,7 @@ function ChangePassword() {
 
 const Wrapper = styled.div`
   display: flex;
-  height: 40vh;
+  height: 50vh;
 `;
 
 const Container = styled.div`

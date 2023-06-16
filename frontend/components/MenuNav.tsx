@@ -152,9 +152,9 @@ const Button = styled.button`
 `
 const ImagePreview = styled.img`
   margin: auto;
-  height: 27vh;
+  height: 45vh;
   width: auto;
-  max-width: 40vh;
+  max-width: 50vh;
   background-color: #f5225e;
   border: 1px solid #000000;
 `;
@@ -206,8 +206,8 @@ const Modal = styled.div`
 `;
 
 const ModalContent = styled.div`
-  width: 50vh;
-  height: 60vh;
+  width: 90vh;
+  height: 90vh;
   padding: 10px;
   background-color: white;
   border-radius: 4px;
@@ -217,7 +217,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 40vh;
 `;
 
 const MenuWrapper = styled.main`

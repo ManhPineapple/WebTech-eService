@@ -48,7 +48,7 @@ function EditProfile() {
 
 const Wrapper = styled.div`
   display: flex;
-  height: 40vh;
+  height: 50vh;
 `;
 
 const Container = styled.div`
@@ -100,7 +100,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 60px;
+  margin-top: 40px;
 `;
 
 export default EditProfile;

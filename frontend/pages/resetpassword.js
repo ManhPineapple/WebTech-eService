@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div `
     .footer {
-        margin-top: 25vh;
-        padding-bottom: 52px;
-        padding-top: 24px;
+        padding-bottom: 20px;
     }
 
     .links {
@@ -34,7 +32,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 35vh;
-  margin: 20vh auto;
+  margin: 15vh auto;
   padding: 20px 20px;
   background-color: #fafafa;
   border: 2px solid #dbdbdb;
