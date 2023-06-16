@@ -94,7 +94,7 @@ function LoginPage() {
               </div>
 
               <div className='forgot-password-container'> 
-                <Link href="">
+                <Link href="/resetpassword">
                     <span style ={{fontSize: '14px',color: 'black'}}>Forgot password?</span>
                 </Link>
               </div>

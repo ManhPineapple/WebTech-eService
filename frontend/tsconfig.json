@@ -27,6 +27,6 @@
       "src/utils/*": ["utils/*"]
     }
   },
-  "include": ["types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/account/edit/[iduser].js", "components/Post/Post.js", "components/MenuNav.js", "components/MenuNav.js"],
+  "include": ["types/*.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/account/edit/edit.js", "components/Post/Post.js", "components/MenuNav.js", "components/MenuNav.js"],
   "exclude": ["node_modules"]
 }

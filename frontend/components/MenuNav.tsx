@@ -141,35 +141,35 @@ function MenuNav() {
   );
 }
 const Button = styled.button`
-  height: 40px;
+  height: 30px;
   color: white;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   background-color: #f5225e;
-  margin-top: 80px;
+  margin-top: 40px;
 `
 const ImagePreview = styled.img`
   margin: auto;
-  height: 430px;
+  height: 27vh;
   width: auto;
-  max-width: 600px;
-  margin-bottom: 16px;
+  max-width: 40vh;
   background-color: #f5225e;
+  border: 1px solid #000000;
 `;
 const Input = styled.input`
   margin-bottom: 16px;
 `;
 const CancelButton = styled.button`
-  height: 40px;
+  height: 30px;
   background-color: #523a40;
   color: white;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 const Form = styled.form`
   display: flex;
@@ -177,12 +177,12 @@ const Form = styled.form`
 `;
 
 const Label = styled.label`
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 8px;
 `;
 
 const Textarea = styled.textarea`
-  height: 100px;
+  height: 60px;
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -191,7 +191,7 @@ const Textarea = styled.textarea`
 `;
 const Title = styled.h2`
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 const Modal = styled.div`
   position: fixed;
@@ -206,9 +206,9 @@ const Modal = styled.div`
 `;
 
 const ModalContent = styled.div`
-  width: 65vh;
-  height: 80vh;
-  padding: 20px;
+  width: 50vh;
+  height: 60vh;
+  padding: 10px;
   background-color: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -217,7 +217,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 50vh;
 `;
 
 const MenuWrapper = styled.main`

@@ -46,9 +46,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                               }
                               onClick={() => dispatch(setSiderCollapsed(!isSiderCollapsed))}
                           ></Button>
-
                           <MenuNav />
-                              
                           <Dropdown collapsed={isSiderCollapsed} />
                   </AntdLayout.Sider>
               </Affix>

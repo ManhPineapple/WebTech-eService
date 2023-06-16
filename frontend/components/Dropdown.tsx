@@ -21,7 +21,7 @@ function UserDropdown({ collapsed }: { collapsed?: boolean }) {
       {
         key: 'Setting',
         label: (
-          <DropdownItemLink href="/">
+          <DropdownItemLink href="/account/edit">
             <span>Setting</span>
             <BsGear size={16} />
           </DropdownItemLink>

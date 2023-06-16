@@ -1,9 +1,7 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { ComponentType } from 'react';
-import Layout from 'src/components/Layout';
 import { useAppSelector } from 'src/redux/store';
 import Navigate from './Navigate';
-import HomePage from 'src/components/HomePage';
 
 type IntrinsicAttributes = EmotionJSX.IntrinsicAttributes;
 
@@ -16,10 +14,7 @@ function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType
     // if (userState?.username === undefined) return <Navigate to='/login' />;
     
     return (
-      // <Layout>
-      //   <WrappedComponent {...props} />
-      // </Layout>
-      <HomePage />
+      <WrappedComponent {...props} />
     );
   };
 }
