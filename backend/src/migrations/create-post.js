@@ -16,7 +16,7 @@ module.exports = {
           key: "ID_User"
         } 
       },
-      title: {
+      postImage: {
         type: Sequelize.STRING
       },
       content: {

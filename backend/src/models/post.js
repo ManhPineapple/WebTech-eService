@@ -24,10 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     ID_User: DataTypes.INTEGER,
-    title: DataTypes.STRING,
+    postImage: DataTypes.STRING,
     content: DataTypes.TEXT,
     likes: DataTypes.INTEGER,
-    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Post',

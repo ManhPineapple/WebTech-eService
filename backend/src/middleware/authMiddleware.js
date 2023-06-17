@@ -3,9 +3,11 @@ import jwt from "jsonwebtoken";
 const authMiddleware = {
     verifyToken(req, res, next) {
         const accessToken = req.cookies.accessToken;
+        console.log(accessToken);
         if (accessToken) {
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
                 if (err) {
+                    console.log(err);
                     return res.status(403).json({
                         status: false,
                         message: 'Token is invalid'

@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import db from '../models/index.js';
+import { transporter } from "../server.js";
 
 export const mailOptions = (to, link) => {
     return {
@@ -108,8 +109,10 @@ const authController = {
             {
                 const accessToken = authController.generateAccessToken(user);
                 const refreshToken = authController.generateRefreshToken(user);
+                console.log(accessToken);
                 res.cookie("accessToken", accessToken, {
                     httpOnly: true,
+                    path: '/',
                 });
                 res.cookie("refreshToken", refreshToken, {
                     httpOnly: true,
@@ -227,14 +230,15 @@ const authController = {
         });
 
         if (user) {
-            const token = this.generateAccessToken(user);
+            const token = authController.generateAccessToken(user);
             const rsPasswordlink = `http://localhost:3000/reset-password?token=${token}`;
-            transporter.sendMail(mailOptions(user.email, ), function(error, info){
+            transporter.sendMail(mailOptions(user.email, rsPasswordlink), function(error, info){
                 if (error) {
                   console.log(error);
                 } else {
                   console.log('Email sent: ' + info.response);
                 }
+                return res.json({ message: 'Email sent!'});
             });
         } else return res.status(200).json({
             message: `User doesn't exist`
