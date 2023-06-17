@@ -15,6 +15,9 @@ authRouter.get('/facebook/callback',
   passport.authenticate('facebook'),
   authController.facebook
 );
+
+authRouter.post('/password', authController.passwordResetRequest);
+authRouter.post('/password/reset', authController.passwordReset);
 // Example: How to use authMiddleware
 
 // authRouter.get('/test_middleware_user', authMiddleware.verifyAdmin, (req, res) => {

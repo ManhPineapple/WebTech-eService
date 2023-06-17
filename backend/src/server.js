@@ -3,9 +3,22 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import session from "express-session";
+import multer from "multer";
 import nodemailer from 'nodemailer';
 import passport from './config/fbApi.js';
 import route from './routes/index.js';
+dotenv.config();
+
+export const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+ 
+export const upload = multer({ storage: storage })
 
 export const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -25,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/images', express.static('uploads'));
 
 route(app);
 

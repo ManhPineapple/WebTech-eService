@@ -23,13 +23,6 @@ module.exports = {
           key: "ID_Post"
         } 
       },
-      ID_Parent_cmt: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "comments",
-          key: "ID_Comment"
-        } 
-      },
       content: {
         type: Sequelize.TEXT
       },

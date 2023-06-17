@@ -4,7 +4,6 @@ const forumController = {
     async getAllPost (req, res) {
         try {
             let listOfPost = await db.Post.findAll({
-                where: {status: 'accepted'},
                 limit: 10,
                 order: [['createdAt', 'DESC']],
                 include: [
@@ -24,6 +23,7 @@ const forumController = {
                 listOfPost
             });
         } catch (error) {
+            console.log(error);
             return res.status(500).json({status:true});
         }
     },
@@ -46,19 +46,21 @@ const forumController = {
     },
 
     async createPost(req, res) {
+        console.log(req.body);
+        console.log(req.file);
+        console.log(req.user);
         try {
-            if (!req.body.title || !req.body.content) {
+            if (!req.body.caption) {
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
             } else {
                 let post = await db.Post.create({
-                    ID_User: req.body.ID_User,
-                    title: req.body.title,
-                    content: req.body.content,
+                    ID_User: req.user.id,
+                    content: req.body.caption,
+                    postImage: req.file.path,
                     likes: 0,
-                    status: 'pending'
                 })
 
                 return res.status(200).json({
@@ -68,6 +70,7 @@ const forumController = {
                 })
             }
         } catch (error) {
+            console.log(error);
             return res.status(500).json({status:true});
         }
     },
