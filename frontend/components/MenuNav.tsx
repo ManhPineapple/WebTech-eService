@@ -9,7 +9,6 @@ import { CgProfile } from 'react-icons/cg';
 import { MdOutlineAddBox, MdOutlineExplore } from 'react-icons/md';
 import { TiLocationArrowOutline } from 'react-icons/ti';
 import {useState} from 'react'
-import blankImage from '../resource/blank_image.png'
 
 
 export const items: Required<MenuProps>['items'] = [
@@ -217,7 +216,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  height: 30vh;
 `;
 
 const MenuWrapper = styled.main`

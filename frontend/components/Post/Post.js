@@ -76,8 +76,9 @@ function Post({ user, postImage,userImage, likes, timestamp, content,listcomment
 
 const PageWrapper = styled.main`
   .post {
-    width: 800px;
-    margin: 30px 40px 50px 40px;
+    margin: 20px;
+    height: auto;
+    width: 95%;
   }
 
   .post__header {
