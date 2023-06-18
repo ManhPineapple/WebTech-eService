@@ -11,6 +11,7 @@ import { Input } from "antd";
 import { useState } from "react";
 
 function Post({ user, postImage,userImage, likes, timestamp, content,listcomments }) {
+  const [reply,setReply] = useState("");
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
@@ -26,12 +27,17 @@ function Post({ user, postImage,userImage, likes, timestamp, content,listcomment
 
     // tao moi comment o day
 
-    e.target.value = "";
+    setReply("");
   };
 
-  const handleReply = (e)=>{
-    console.log("reply")
+  const handleReply = (item)=>()=>{
+    console.log(item);
+    // Thay đổi username reply ở đây
+    setReply("@"+"name" +" ")
   }
+  const handleReplyInputChange = (e) => {
+    setReply(e.target.value); // Cập nhật giá trị của Input khi người dùng nhập liệu
+  };
 
   return (
     <PageWrapper>
@@ -60,14 +66,15 @@ function Post({ user, postImage,userImage, likes, timestamp, content,listcomment
           </div>
           <div className="listComment">
               {listcomments.map((item)=>(
-                <Comment avatar = {item.avatar} content ={item.content} datetime = {item.datetime} author ={item.author} 
-                         actions={[<span onClick={handleReply} className="reply_action">Reply</span>]}
+                <Comment 
+                         avatar = {item.avatar} content ={(item.content)} datetime = {item.datetime} author ={item.author} 
+                         actions={[<span onClick={handleReply(item)} className="reply_action">Reply</span>]}
                          children = {item.replies.map((reply)=>(
                                       <Comment author={reply.author} avatar = {reply.avatar} content = {reply.content}  datetime = {reply.datetime}/>
                                     ))}
                 />
               ))}
-              <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit}/>
+              <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit} value={reply} onChange={handleReplyInputChange} />
           </div>
       </div>
     </PageWrapper>

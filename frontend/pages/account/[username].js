@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import Post from '../../components/Post/Post'
 import ConfirmDeleteModal from '../../components/ConfirmDeleteModal';
 import EditModal from '../../components/EditModal';
+import Link from 'next/link';
 
 const ProfileImage = styled.img`
   width: 200px;
@@ -15,7 +16,7 @@ const ProfileImage = styled.img`
 
 const ProfileName = styled.h1`
   font-size: 16px;
-  margin: 18px;;
+  margin: 18px;
 `;
 
 const ProfileUsername = styled.h3`
@@ -258,9 +259,6 @@ function Profile() {
     const handleToggleDropdown = () => {
       setOpen(!open);
     };
-    const handleEditProfile = (e)=>{
-        
-    }
     
     const handleOpenModal = (post) => {
       setSelectedPost(post);
@@ -292,9 +290,6 @@ function Profile() {
     const handleCloseDeleteModal = () => {
       setShowDeleteModal(false);
     };
-    const handleOpenEditModal = () => {
-      setShowEditModal(true);
-    };
   
     const handleCloseEditModal = () => {
       setShowDeleteModal(false);
@@ -322,7 +317,9 @@ function Profile() {
                     <div>
                         <div className='contain_username'>
                             <ProfileUsername>{user.username}</ProfileUsername>
-                            <ProfileButton onClick = {handleEditProfile}>Edit Profile</ProfileButton>
+                            <ProfileButton>
+                              <Link href='/account/edit'>Edit Profile</Link>
+                            </ProfileButton>
                         </div>
                         <ProfileBio><strong>{user.posts.length}</strong> posts</ProfileBio>
                         <ProfileName>{user.fullname}</ProfileName>
@@ -352,10 +349,10 @@ function Profile() {
         >
             {selectedPost && (
               <div>
-                <Settings onClick={handleToggleDropdown}>:::</Settings>
+                <Settings onClick={()=>handleToggleDropdown()}>:::</Settings>
                 <DropdownList toggle={() => setOpen(!open)}  open={open}>
-                  <DropdownItem onClick={handleClickEdit}>Edit</DropdownItem>
-                  <DropdownItem onClick={handelClickDelete}>Delete</DropdownItem>
+                  <DropdownItem onClick={()=>handleClickEdit()}>Edit</DropdownItem>
+                  <DropdownItem onClick={()=>handelClickDelete()}>Delete</DropdownItem>
                 </DropdownList>
                 <Post user={selectedPost.user}
                     postImage={selectedPost.postImage}
@@ -366,13 +363,13 @@ function Profile() {
                     listcomments = {selectedPost.listcomments}/>
                 <ConfirmDeleteModal
                   show={showDeleteModal}
-                  onDelete={handleDelete}
-                  onCancel={handleCloseDeleteModal}
+                  onDelete={()=>handleDelete()}
+                  onCancel={()=>handleCloseDeleteModal()}
                 />
                 <EditModal
                   show={showEditModal}
-                  onEdit={handleEdit}
-                  onCancel={handleCloseEditModal}
+                  onEdit={()=>handleEdit()}
+                  onCancel={()=>handleCloseEditModal()}
                   post = {selectedPost}
                 />
               </div>

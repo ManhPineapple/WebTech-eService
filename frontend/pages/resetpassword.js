@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div `
@@ -95,19 +95,20 @@ const Link = styled.a`
 
 
 function ResetPassword() {
-    const sendLoginLink = (e)=>{
-
-    }
+  const [email,setEmail] = useState("");
+  const sendLoginLink = ()=>{
+    console.log(email)
+  }
   return (
     <Wrapper>
         <Container>
             <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo" />
             <Lock src="https://static.vecteezy.com/system/resources/thumbnails/002/205/981/small/lock-icon-free-vector.jpg" alt="Instagram Logo" />
             <Title>Trouble logging in?</Title>
-            <p style={{textAlign: 'center'}}>Enter your email, phone, or username and we'll send you a link to get back into your account.</p>
+            <p style={{textAlign: 'center'}}>Enter your email and we'll send you a link to get back into your account.</p>
             <Form>
-                <Input type="email" id="email" name="email" placeholder = "Email"/>
-                <Button onClick = {sendLoginLink}>Send login link</Button>
+                <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                <Button type='button' onClick = {()=>sendLoginLink()}>Send login link</Button>
                 <div style={{backgroundColor: '#ccd8ed',padding: '10px',marginTop: '20px'}}>
                     <Link href="/login">Back to Login</Link>
                 </div>
