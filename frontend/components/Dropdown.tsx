@@ -3,10 +3,7 @@ import { Dropdown, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { BsGear, BsList } from 'react-icons/bs';
-import { FaRegMoon } from 'react-icons/fa';
-import { ImSun } from 'react-icons/im';
 import useLogout from 'src/hooks/useLogout';
-import { toggleThemeMode } from 'src/redux/reducer/theme.reducer';
 import { useAppDispatch, useAppSelector } from 'src/redux/store';
 
 function UserDropdown({ collapsed }: { collapsed?: boolean }) {
@@ -26,16 +23,6 @@ function UserDropdown({ collapsed }: { collapsed?: boolean }) {
             <BsGear size={16} />
           </DropdownItemLink>
         ),
-      },
-      {
-        key: 'ThemeMode',
-        label: (
-          <DropdownItemBtn onClick={() => dispatch(toggleThemeMode(null))}>
-            <span>{mode === 'dark' ? 'Light mode' : 'Dark mode'}</span>
-            {mode === 'dark' ? <ImSun size={15} /> : <FaRegMoon size={15} />}
-          </DropdownItemBtn>
-        ),
-        disabled: isLoadingLogout,
       },
       {
         type: 'divider',
