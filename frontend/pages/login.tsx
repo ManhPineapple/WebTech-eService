@@ -6,11 +6,10 @@ import { useState } from "react";
 import WithoutAuth from 'src/hooks/withoutAuth';
 import { useLoginMutation } from '../redux/query/auth.query';
 
-import { AiFillFacebook } from 'react-icons/ai';
+import { AiFillFacebook, AiOutlineMail } from 'react-icons/ai';
 import { BsPeople } from 'react-icons/bs';
 import { FaLock, FaPhoneAlt, FaSignature } from 'react-icons/fa';
 import { useRegisterMutation } from 'src/redux/query/auth.query';
-import { AiOutlineMail } from 'react-icons/ai';
  
 function LoginPage() {
   const [signUp, setSignUp] = useState(false)
@@ -29,7 +28,6 @@ function LoginPage() {
   const [registerMutate] = useRegisterMutation();
 
   const handleSignUp = (formData: any) => {
-    formData.email = "";
     registerMutate(formData)
       .unwrap().then(({ data, message }) => {
         alert(message);
