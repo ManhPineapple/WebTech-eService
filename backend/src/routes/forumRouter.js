@@ -27,9 +27,4 @@ forumRouter.post('/createcomment', authMiddleware.verifyToken, forumController.c
 forumRouter.put('/updatecomment', authMiddleware.verifyToken, forumController.updateComment);
 forumRouter.delete('/deletecomment', authMiddleware.verifyToken, forumController.deleteComment);
 
-// forumRouter.get('/getpending', forumController.getPending);
-// forumRouter.put('/acceptpost', forumController.acceptPost);
-// forumRouter.delete('/admindeletepost', forumController.adminDeletePost);
-// forumRouter.delete('/admindeletecomment', forumController.adminDeleteComment);
-
 export default forumRouter;

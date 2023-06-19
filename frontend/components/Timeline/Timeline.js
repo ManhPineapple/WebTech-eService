@@ -41,10 +41,12 @@ function Timeline() {
             </div>
         </div>
         <div className="timeline__right">
+          {user && 
           <Suggestions user={{userImage: 'http://localhost:8000/images' + user.avatar,
                               username: user.username,
                               fullName: user.fullname
                               }} />
+          }
         </div>
       </div>
     </PageWrapper>

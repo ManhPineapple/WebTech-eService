@@ -60,13 +60,6 @@ const authController = {
                     message: 'Missing required field'
                 }) 
             }
-                
-            if (email) if (!emailValidator.validate(req.body.email)) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Email is invalid'
-                })
-            }
 
             const dbUser = await db.User.findOne({
                 where: {username: username}
