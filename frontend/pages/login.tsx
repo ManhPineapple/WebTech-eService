@@ -10,6 +10,7 @@ import { AiFillFacebook } from 'react-icons/ai';
 import { BsPeople } from 'react-icons/bs';
 import { FaLock, FaPhoneAlt, FaSignature } from 'react-icons/fa';
 import { useRegisterMutation } from 'src/redux/query/auth.query';
+import { AiOutlineMail } from 'react-icons/ai';
  
 function LoginPage() {
   const [signUp, setSignUp] = useState(false)
@@ -134,12 +135,12 @@ function LoginPage() {
               </div>
 
               <Form.Item
-                name='phone_number'
+                name='email'
                 rules={[
-                  { required: true, message: '• Phone number is required' },
+                  { required: true, message: '• Email is required' },
                 ]}
               >
-                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Mobile number' />
+                <Input prefix={<AiOutlineMail />} type='email' placeholder='Email' />
               </Form.Item>
               <Form.Item
                 name='fullname'

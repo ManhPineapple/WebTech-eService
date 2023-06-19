@@ -12,12 +12,17 @@ function Post({ user, postId, postImage,userImage, likes, timestamp, content,lis
     console.log(commentText, postId);
     // tao moi comment o day
 
-    e.target.value = "";
+    setReply("");
   };
 
-  const handleReply = (item)=>{
-    console.log();
+  const handleReply = (item)=>()=>{
+    console.log(item);
+    // Thay đổi username reply ở đây
+    setReply("@"+"name" +" ")
   }
+  const handleReplyInputChange = (e) => {
+    setReply(e.target.value); // Cập nhật giá trị của Input khi người dùng nhập liệu
+  };
 
   return (
     <PageWrapper>
@@ -45,15 +50,16 @@ function Post({ user, postId, postImage,userImage, likes, timestamp, content,lis
               <span style={{marginLeft: '10px'}}>{content}</span>
           </div>
           <div className="listComment">
-              {listcomments.map((item, index)=>(
-                <Comment key={index} avatar = {item.User.avatar} content ={item.content} datetime = {item.updateAt} author ={item.User.username} 
-                          // actions={<span onClick={(item) => handleReply(item)} className="reply_action">Reply</span>}
-                          children = {item.replies && item.replies.map((reply)=>(
-                            <Comment author={item.User.username} avatar = {reply.User.avatar} content = {reply.content}  datetime = {reply.updateAt}/>
-                          ))}
+              {listcomments.map((item)=>(
+                <Comment 
+                         avatar = {item.avatar} content ={(item.content)} datetime = {item.datetime} author ={item.author} 
+                         actions={[<span onClick={handleReply(item)} className="reply_action">Reply</span>]}
+                         children = {item.replies.map((reply)=>(
+                                      <Comment author={reply.author} avatar = {reply.avatar} content = {reply.content}  datetime = {reply.datetime}/>
+                                    ))}
                 />
               ))}
-              <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit}/>
+              <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit} value={reply} onChange={handleReplyInputChange} />
           </div>
       </div>
     </PageWrapper>
@@ -62,8 +68,9 @@ function Post({ user, postId, postImage,userImage, likes, timestamp, content,lis
 
 const PageWrapper = styled.main`
   .post {
-    width: 800px;
-    margin: 30px 40px 50px 40px;
+    margin: 20px;
+    height: auto;
+    width: 95%;
   }
 
   .post__header {

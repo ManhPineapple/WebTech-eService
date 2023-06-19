@@ -158,8 +158,8 @@ function ResetPassword() {
             <Title>Trouble logging in?</Title>
             <p style={{textAlign: 'center'}}>Enter your email and we will send you a link to get back into your account.</p>
             <Form>
-                <Input type="email" id="email" name="email" placeholder = "Email"/>
-                <Button onClick = {sendLoginLink}>Send login link</Button>
+                <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                <Button type='button' onClick = {()=>sendLoginLink()}>Send login link</Button>
                 <div style={{backgroundColor: '#ccd8ed',padding: '10px',marginTop: '20px'}}>
                     <Link href="/login">Back to Login</Link>
                 </div>

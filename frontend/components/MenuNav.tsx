@@ -2,61 +2,64 @@ import styled from '@emotion/styled';
 import { Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { StrictMode } from 'react';
-import { AiFillHome, AiOutlineHeart } from 'react-icons/ai';
+import { StrictMode, useState } from 'react';
+import { AiFillHome } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
-import { MdOutlineAddBox, MdOutlineExplore } from 'react-icons/md';
+import { MdOutlineAddBox } from 'react-icons/md';
 import { TiLocationArrowOutline } from 'react-icons/ti';
-import {useState} from 'react'
-import blankImage from '../resource/blank_image.png'
-
-
-export const items: Required<MenuProps>['items'] = [
-  { 
-    label: <Link className='linkMenu' href='/'>Home</Link>,
-    icon: <AiFillHome size={26} color='black'/>,
-    key: 'HOME',
-    className: 'side-menu-item',
-  },
-  {
-    label: <Link className='linkMenu' href='/'>Search</Link>,
-    icon: <BsSearch size={26} color='black'/>,
-    key: 'SEARCH',
-    className: 'side-menu-item',
-  },
-  {
-    label: <Link className='linkMenu' href='/'>Message</Link>,
-    icon: <TiLocationArrowOutline size={26} color='black'/>,
-    key: 'MESSAGE',
-    className: 'side-menu-item',
-  },
-  {
-    label: <a className='linkMenu' >Create</a>,
-    icon: <MdOutlineAddBox size={26} color='black'/>,
-    key: 'CREATE',
-    className: 'side-menu-item',
-  },
-  {
-    label: <Link className='linkMenu' href='/'>Profile</Link>,
-    icon: <CgProfile size={26} color='black'/>,
-    key: 'PROFILE',
-    className: 'side-menu-item',
-  },
-];
+import { useAppSelector } from 'src/redux/store';
 
 function MenuNav() {
+  const { userState } = useAppSelector((s) => ({
+    userState: s.user.data,
+  }));
+
+  const items: Required<MenuProps>['items'] = [
+    { 
+      label: <Link className='linkMenu' href='/'>Home</Link>,
+      icon: <AiFillHome size={26} color='black'/>,
+      key: 'HOME',
+      className: 'side-menu-item',
+    },
+    {
+      label: <Link className='linkMenu' href='/'>Search</Link>,
+      icon: <BsSearch size={26} color='black'/>,
+      key: 'SEARCH',
+      className: 'side-menu-item',
+    },
+    {
+      label: <Link className='linkMenu' href='/message'>Message</Link>,
+      icon: <TiLocationArrowOutline size={26} color='black'/>,
+      key: 'MESSAGE',
+      className: 'side-menu-item',
+    },
+    {
+      label: <a className='linkMenu' >Create</a>,
+      icon: <MdOutlineAddBox size={26} color='black'/>,
+      key: 'CREATE',
+      className: 'side-menu-item',
+    },
+    {
+      label: <Link className='linkMenu' href={`account/${userState?.username}`}>Profile</Link>,
+      icon: <CgProfile size={26} color='black'/>,
+      key: 'PROFILE',
+      className: 'side-menu-item',
+    },
+  ];
+  
+  const initFile = new File(['Hello, world!'], 'hello.txt', { type: 'text/plain' });
   const { asPath, push } = useRouter();
   const [caption, setCaption] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File>(initFile);
   const [showModal, setShowModal] = useState(false);
   const [imgURL, setImageURL] = useState("https://png.pngtree.com/png-clipart/20200226/original/pngtree-colourful-watercolour-textured-background-and-square-vintage-frame-suitable-for-wedding-png-image_5323297.jpg");
 
-  const handleCaptionChange = (e) => {
+  const handleCaptionChange = (e: any) => {
     setCaption(e.target.value);
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     setImage(file);
     const imageURL = URL.createObjectURL(file);
@@ -64,14 +67,23 @@ function MenuNav() {
     setImageURL(imageURL);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     // TODO: Send a request to the server to create the post
-    console.log("Caption:", caption);
-    console.log("Image:", image);
+    const new_post = new FormData();
+    new_post.append("image", image);
+    new_post.append("caption", caption);
+    fetch('http://localhost:8000/forum/createpost', {
+      method: 'POST',
+      body: new_post,
+      credentials: 'include'
+    }).then(res => res.json())
+      .then((res) => {
+        console.log(res);
+      })
     // Reset the form after submitting
     setCaption("");
-    setImage(null);
+    setImage(initFile);
     // Close the modal
     setShowModal(false);
   };
@@ -83,7 +95,7 @@ function MenuNav() {
   const closeModal = () => {
     setShowModal(false);
   };
-  const handleModalClick = (e) => {
+  const handleModalClick = (e: any) => {
     e.stopPropagation();
   };
   return (
