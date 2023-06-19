@@ -1,5 +1,7 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import WithoutAuth from '../hooks/withoutAuth';
 
 const Wrapper = styled.div `
     .footer {
@@ -93,18 +95,68 @@ const Link = styled.a`
   align-items: center;
 `;
 
+const Label = styled.label`
+  font-size: 18px;
+  margin-bottom: 8px;
+`;
 
 function ResetPassword() {
-    const sendLoginLink = (e)=>{
+  const { query: {token} } = useRouter();
 
-    }
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+  const handleConfirmNewPasswordChange = (event) => {
+    setConfirmNewPassword(event.target.value);
+  };
+
+  const sendLoginLink = (e)=>{
+    console.log(e);
+    fetch('http://localhost:8000/auth/password/request', {method: 'post', body: {}}) //body: {email}
+      .then(res => res.json())
+      .then((res) => {
+        alert(res.message);
+      })
+  }
+
+  const handleSubmit = () => {
+    console.log(token);
+  }
+  
+
+  if (token) return (
+    <Container>
+      <Form onSubmit={handleSubmit}>
+
+        <Label>New Password</Label>
+        <Input
+          type="password"
+          value={newPassword}
+          onChange={handleNewPasswordChange}
+        />
+
+        <Label>Confirm New Password</Label>
+        <Input
+          type="password"
+          value={confirmNewPassword}
+          onChange={handleConfirmNewPasswordChange}
+        />
+
+        <Button type="submit">Change Password</Button>
+      </Form>
+    </Container>
+  );
+
   return (
     <Wrapper>
         <Container>
             <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo" />
             <Lock src="https://static.vecteezy.com/system/resources/thumbnails/002/205/981/small/lock-icon-free-vector.jpg" alt="Instagram Logo" />
             <Title>Trouble logging in?</Title>
-            <p style={{textAlign: 'center'}}>Enter your email, phone, or username and we'll send you a link to get back into your account.</p>
+            <p style={{textAlign: 'center'}}>Enter your email and we will send you a link to get back into your account.</p>
             <Form>
                 <Input type="email" id="email" name="email" placeholder = "Email"/>
                 <Button onClick = {sendLoginLink}>Send login link</Button>
@@ -113,7 +165,7 @@ function ResetPassword() {
                 </div>
             </Form>
         </Container>
-          <footer className="footer">
+        <footer className="footer">
             <div className="links">
                 <a href="https://about.meta.com/" target='_blank' rel='noreferrer'>
                 Meta
@@ -211,4 +263,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default WithoutAuth(ResetPassword);

@@ -1,36 +1,22 @@
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import React from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import styled from '@emotion/styled';
-import { Avatar } from "antd";
 import { Comment } from '@ant-design/compatible';
-import { Input } from "antd";
-import { useState } from "react";
+import styled from '@emotion/styled';
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Avatar, Input } from "antd";
 
-function Post({ user, postImage,userImage, likes, timestamp, content,listcomments }) {
+function Post({ user, postId, postImage,userImage, likes, timestamp, content,listcomments }) {
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     const commentText = e.target.value;
-    console.log(commentText);
-    const newComment = {
-      author: "new cat",
-      content: commentText,
-      avatar:"https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-      datetime: "1m",
-      replies: [], // Thêm một mảng để lưu trữ các phản hồi
-    };
-
+    console.log(commentText, postId);
     // tao moi comment o day
 
     e.target.value = "";
   };
 
-  const handleReply = (e)=>{
-    console.log("reply")
+  const handleReply = (item)=>{
+    console.log();
   }
 
   return (
@@ -59,12 +45,12 @@ function Post({ user, postImage,userImage, likes, timestamp, content,listcomment
               <span style={{marginLeft: '10px'}}>{content}</span>
           </div>
           <div className="listComment">
-              {listcomments.map((item)=>(
-                <Comment avatar = {item.avatar} content ={item.content} datetime = {item.datetime} author ={item.author} 
-                         actions={[<span onClick={handleReply} className="reply_action">Reply</span>]}
-                         children = {item.replies.map((reply)=>(
-                                      <Comment author={reply.author} avatar = {reply.avatar} content = {reply.content}  datetime = {reply.datetime}/>
-                                    ))}
+              {listcomments.map((item, index)=>(
+                <Comment key={index} avatar = {item.User.avatar} content ={item.content} datetime = {item.updateAt} author ={item.User.username} 
+                          // actions={<span onClick={(item) => handleReply(item)} className="reply_action">Reply</span>}
+                          children = {item.replies && item.replies.map((reply)=>(
+                            <Comment author={item.User.username} avatar = {reply.User.avatar} content = {reply.content}  datetime = {reply.updateAt}/>
+                          ))}
                 />
               ))}
               <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit}/>

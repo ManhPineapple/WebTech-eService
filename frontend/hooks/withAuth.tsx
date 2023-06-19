@@ -11,7 +11,7 @@ function WithAuth<T extends IntrinsicAttributes>(WrappedComponent: ComponentType
       userState: s.user.data,
     }));
     
-    // if (userState?.username === undefined) return <Navigate to='/login' />;
+    if (userState?.username === undefined) return <Navigate to='/login' />;
     
     return (
       <WrappedComponent {...props} />
