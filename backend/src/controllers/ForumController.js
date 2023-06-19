@@ -46,9 +46,6 @@ const forumController = {
     },
 
     async createPost(req, res) {
-        console.log(req.body);
-        console.log(req.file);
-        console.log(req.user);
         try {
             if (!req.body.caption) {
                 return res.status(500).json({
@@ -66,7 +63,6 @@ const forumController = {
                 return res.status(200).json({
                     status: "ok",
                     post,
-                    message: "Post is waiting for check!"
                 })
             }
         } catch (error) {
@@ -77,20 +73,18 @@ const forumController = {
 
     async createComment(req, res) {
         try {
-            if (!req.body.content || !(req.body.ID_Post ^ req.body.ID_Parent_cmt)) { //content != null, ID_Post/ID_Parent_cmt need exact 1 != null
+            if (!req.body.content || !req.body.ID_Post) {
                 return res.status(500).json({
                     status: false,
                     message: 'Invalid Input'
                 })
             } else {
                 let comment = await db.Comment.create({
-                    ID_User: req.body.ID_User,
+                    ID_User: req.user.id,
                     content: req.body.content,
-                    ID_Post: req.body.ID_Post || null,
-                    ID_Parent_cmt: req.body.ID_Parent_cmt || null,
+                    ID_Post: req.body.ID_Post,
                     likes: 0,
                 })
-
                 return res.status(200).json({
                     status: "ok",
                     comment,
@@ -106,18 +100,15 @@ const forumController = {
         try {
             if (!req.body.ID_Post) {
                 return res.status(500).json({
-                    status: false,
                     message: 'Missing required field'
                 })
             } else {
-                let post = await db.Post.findOne({
-                    where: {ID_Post: req.body.ID_Post}
-                })
-                post = await db.Post.update(
+                await db.Post.update(
                 {
-                    title: req.body.title,
-                    content: req.body.content,
-                    status: 'pending'
+                    ID_User: req.user.id,
+                    content: req.body.caption,
+                    postImage: req.file.path,
+                    likes: 0,
                 },
                 {
                     where: {ID_Post: req.body.ID_Post},
@@ -163,17 +154,21 @@ const forumController = {
     },
 
     async deletePost (req, res) {
+        console.log(req.body.id);
         try {
-            if (!req.query.id) {
+            if (!req.body.id) {
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
             } else {
-                await db.Post.destroy({
-                    where: {
-                        ID_Post: req.query.id,
-                    }
+                console.log('delete');
+                await db.Post.update(
+                {
+                    status: 'deleted'
+                },
+                {
+                    where: {ID_Post: req.body.id}
                 })
 
                 return res.status(200).json({

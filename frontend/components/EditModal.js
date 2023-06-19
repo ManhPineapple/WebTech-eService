@@ -1,8 +1,7 @@
-import React from 'react';
-import Modal from 'react-modal';
 import Button from 'antd/lib/button';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
 import styled from 'styled-components';
-import {useState} from 'react'
 
 const customStyles = {
     overlay: {
@@ -63,20 +62,20 @@ const ImagePreview = styled.img`
   background-color: #f5225e;
   border: 1px solid #000000;
 `;
-const ConfirmDeleteModal = ({ show, onEdit, onCancel,post }) => {
-    const [caption, setCaption] = useState(post.content);
-    const [image, setImage] = useState(null);
-    const [imgURL, setImageURL] = useState(post.postImage);
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-        const imageURL = URL.createObjectURL(file);
-        console.log(imageURL)
-        setImageURL(imageURL);
-      };
-    const handleCaptionChange = (e) => {
-        setCaption(e.target.value);
-      };
+const ConfirmDeleteModal = ({ show, onEdit, onCancel, post }) => {
+  const [caption, setCaption] = useState(post.content);
+  const [image, setImage] = useState(null);
+  const [imgURL, setImageURL] = useState(post.postImage);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    const imageURL = URL.createObjectURL(file);
+    console.log(imageURL)
+    setImageURL(imageURL);
+  };
+  const handleCaptionChange = (e) => {
+    setCaption(e.target.value);
+  };
   return (
     <Modal
           isOpen={show}

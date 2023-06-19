@@ -102,6 +102,7 @@ const Label = styled.label`
 
 function ResetPassword() {
   const { query: {token} } = useRouter();
+  const [email, setEmail] = useState("");
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -113,9 +114,14 @@ function ResetPassword() {
     setConfirmNewPassword(event.target.value);
   };
 
-  const sendLoginLink = (e)=>{
-    console.log(e);
-    fetch('http://localhost:8000/auth/password/request', {method: 'post', body: {}}) //body: {email}
+  const sendLoginLink = ()=>{
+    fetch('http://localhost:8000/auth/password/request', { 
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, username: '' })
+    })
       .then(res => res.json())
       .then((res) => {
         alert(res.message);
@@ -123,30 +129,39 @@ function ResetPassword() {
   }
 
   const handleSubmit = () => {
-    console.log(token);
+    console.log(token, newPassword, confirmNewPassword);
+    if (newPassword !== confirmNewPassword) { alert('Password not match'); return }
+    fetch('http://localhost:8000/auth/password/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({token: token, newPassword: newPassword}),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        alert(res.message);
+      })
   }
   
 
   if (token) return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Label>New Password</Label>
+      <Input
+        type="password"
+        value={newPassword}
+        onChange={handleNewPasswordChange}
+      />
 
-        <Label>New Password</Label>
-        <Input
-          type="password"
-          value={newPassword}
-          onChange={handleNewPasswordChange}
-        />
+      <Label>Confirm New Password</Label>
+      <Input
+        type="password"
+        value={confirmNewPassword}
+        onChange={handleConfirmNewPasswordChange}
+      />
 
-        <Label>Confirm New Password</Label>
-        <Input
-          type="password"
-          value={confirmNewPassword}
-          onChange={handleConfirmNewPasswordChange}
-        />
-
-        <Button type="submit">Change Password</Button>
-      </Form>
+      <Button onClick={handleSubmit}>Change Password</Button>
     </Container>
   );
 
@@ -158,7 +173,7 @@ function ResetPassword() {
             <Title>Trouble logging in?</Title>
             <p style={{textAlign: 'center'}}>Enter your email and we will send you a link to get back into your account.</p>
             <Form>
-                <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
                 <Button type='button' onClick = {()=>sendLoginLink()}>Send login link</Button>
                 <div style={{backgroundColor: '#ccd8ed',padding: '10px',marginTop: '20px'}}>
                     <Link href="/login">Back to Login</Link>

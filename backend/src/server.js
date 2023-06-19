@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/images', express.static('uploads'));
+app.use('/images', express.static('images'));
 
 route(app);
 

@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      phone_number: {
+      bio: {
         type: Sequelize.STRING
       },
       avatar: {

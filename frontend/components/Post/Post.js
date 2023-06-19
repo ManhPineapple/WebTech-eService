@@ -1,18 +1,34 @@
+/* eslint-disable react/no-children-prop */
 import { Comment } from '@ant-design/compatible';
 import styled from '@emotion/styled';
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Avatar, Input } from "antd";
+import { useState } from 'react';
+import { useAppSelector } from 'src/redux/store';
 
-function Post({ user, postId, postImage,userImage, likes, timestamp, content,listcomments }) {
+function Post({ user, postId, postImage,userImage, likes, timestamp, content, listcomments }) {
+  const [reply, setReply] = useState('');
+  const { currentUser } = useAppSelector((s) => ({
+    currentUser: s.user.data,
+  }));
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     const commentText = e.target.value;
     console.log(commentText, postId);
     // tao moi comment o day
-
-    setReply("");
+    fetch('http://localhost:8000/forum/createcomment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ ID_Post: postId, content: commentText }),
+      credentials: 'include'
+    }).then(res => res.json()).then((res) => {
+      if (res.message == 'Success') listcomments.push({ content: commentText, User: {username: currentUser.username, avatar: null} })
+      setReply("");
+    })
   };
 
   const handleReply = (item)=>()=>{
@@ -50,13 +66,11 @@ function Post({ user, postId, postImage,userImage, likes, timestamp, content,lis
               <span style={{marginLeft: '10px'}}>{content}</span>
           </div>
           <div className="listComment">
-              {listcomments.map((item)=>(
+              {listcomments?.map((item, index)=>(
                 <Comment 
-                         avatar = {item.avatar} content ={(item.content)} datetime = {item.datetime} author ={item.author} 
-                         actions={[<span onClick={handleReply(item)} className="reply_action">Reply</span>]}
-                         children = {item.replies.map((reply)=>(
-                                      <Comment author={reply.author} avatar = {reply.avatar} content = {reply.content}  datetime = {reply.datetime}/>
-                                    ))}
+                    key={index}
+                    avatar = {item.User.avatar} content ={(item.content)} author ={item.User.username} 
+                    actions={<span onClick={handleReply(item)} className="reply_action">Reply</span>}
                 />
               ))}
               <Input placeholder="Add a comment..." onPressEnter={handleCommentSubmit} value={reply} onChange={handleReplyInputChange} />

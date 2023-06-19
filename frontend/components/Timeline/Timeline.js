@@ -5,6 +5,7 @@ import Suggestions from "./Suggestions";
 
 function Timeline() {
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState({});
   useEffect(() => {
     fetch('http://localhost:8000/forum/getpost').then(res => res.json()).then((res) => {
       console.log(res.listOfPost);
@@ -12,6 +13,12 @@ function Timeline() {
     })
   }, [])
 
+  useEffect(() => {
+    fetch('http://localhost:8000/user/info', {method: 'get', credentials: 'include'}).then(res => res.json()).then((res) => {
+      console.log(res.dbUser);
+      setUser(res.dbUser);
+    })
+  }, [])
 
   return (
     <PageWrapper>
@@ -34,9 +41,9 @@ function Timeline() {
             </div>
         </div>
         <div className="timeline__right">
-          <Suggestions user={{userImage: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg",
-                              username: "cat one",
-                              fullName: "Nguyen Van Meo"
+          <Suggestions user={{userImage: 'http://localhost:8000/images' + user.avatar,
+                              username: user.username,
+                              fullName: user.fullname
                               }} />
         </div>
       </div>

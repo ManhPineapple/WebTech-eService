@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import styled from "@emotion/styled";
-import MenuNav from "src/components/MenuNav";
+import React, { useState } from "react";
+import ChangePassword from "src/components/ChangePassword";
+import EditProfile from "src/components/EditProfile";
 import Layout from "src/components/Layout";
-import EditProfile from "src/components/EditProfile"
-import ChangePassword from "src/components/ChangePassword"
 
 function Settings() {
   const [name, setName] = useState("");

@@ -2,15 +2,19 @@ import db from "../models";
 
 const userController = {
   async userInfo(req, res) {
-    const user = req.user;
+    const user = req.user.id;
     try {
-      const user = db.User.findOne({
-        where: {ID_User: user}
+      const dbUser = await db.User.findOne({
+        where: {ID_User: user},
+        include: [
+          {
+            model: db.Post,
+          },
+        ]
       });
-
       return res.status(200).json({
           status: "ok",
-          user
+          dbUser
       });
     } catch (error) {
       return res.status(500).json({status:true});

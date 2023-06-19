@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Op } from "sequelize";
 import db from '../models/index.js';
 import { transporter } from "../server.js";
 
@@ -13,6 +14,19 @@ export const mailOptions = (to, link) => {
 };
 
 const authController = {
+    resetPasswordToken(user) {
+        return jwt.sign(
+            {
+                id: user.ID_User,
+                time: Date.now(),
+            }, 
+            process.env.JWT_ACCESS_KEY,
+            {
+                expiresIn: "3d"
+            }
+        );
+    },
+
     generateAccessToken(user) {
         return jwt.sign(
             {
@@ -109,7 +123,6 @@ const authController = {
             {
                 const accessToken = authController.generateAccessToken(user);
                 const refreshToken = authController.generateRefreshToken(user);
-                console.log(accessToken);
                 res.cookie("accessToken", accessToken, {
                     httpOnly: true,
                     path: '/',
@@ -204,9 +217,11 @@ const authController = {
             user.password
         );
         if (validPassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(newPassword, salt)
             await db.User.update(
             {
-                password: newPassword    
+                password: hashed   
             },
             {
                 where: {username: username}
@@ -224,21 +239,28 @@ const authController = {
     },
     
     async passwordResetRequest(req, res) {
-        const { username } = req.body;
+        const { username, email } = req.body;
+        if (!email && !username) return res.json({message: 'Missing parameter'})
         const user = await db.User.findOne({
-            where: {username: username}
+            where: {
+                [Op.or]: [
+                    {username: username},
+                    {email: email}
+                ]
+            }
         });
 
         if (user) {
-            const token = authController.generateAccessToken(user);
-            const rsPasswordlink = `http://localhost:3000/reset-password?token=${token}`;
+            const token = authController.resetPasswordToken(user);
+            const rsPasswordlink = `http://localhost:3000/resetpassword?token=${token}`;
             transporter.sendMail(mailOptions(user.email, rsPasswordlink), function(error, info){
                 if (error) {
                   console.log(error);
+                  return res.json({ message: 'Something wrong with email, please try again later!'});
                 } else {
                   console.log('Email sent: ' + info.response);
                 }
-                return res.json({ message: 'Email sent!'});
+                return res.json({ message: 'Check your email to complete reset password!'});
             });
         } else return res.status(200).json({
             message: `User doesn't exist`
@@ -249,17 +271,19 @@ const authController = {
         const { token, newPassword } = req.body;
         let userId;
         jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user) => {
-            userId = user.id;
+            if (Date.now() - user.time < 600000) userId = user.id;
+            else return res.json({ message: "Password reset request expired!"})
         })
-
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(newPassword, salt);
         await db.User.update(
         {
-            password: newPassword    
+            password: hashed
         },
         {
             where: {ID_User: userId}
         })
-        return res.status(200);
+        return res.json({message: "Reset password successfully"});
     }
 }
 

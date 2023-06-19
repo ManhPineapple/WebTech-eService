@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import Layout from 'src/components/Layout'
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import Post from '../../components/Post/Post'
+import Layout from 'src/components/Layout';
+import styled from 'styled-components';
 import ConfirmDeleteModal from '../../components/ConfirmDeleteModal';
 import EditModal from '../../components/EditModal';
-import Link from 'next/link';
+import Post from '../../components/Post/Post';
 
 const ProfileImage = styled.img`
   width: 200px;
@@ -158,150 +158,87 @@ const customStyles = {
   },
 };
 function Profile() {
+  const [user, setUser] = useState({});
   const [selectedPost, setSelectedPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-    const user = {
-        username: "johnwick",
-        fullname: "John Doe Wick",
-        bio: "Front-end Developer, App developer, Data Science, Ai scientist",
-        avatarImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeVKKhcw5BVb33-sIFbVwBxpGvFjAORNkHA&usqp=CAU",
-        posts: [
-          {
-            user: "kobee_18",
-            postImage:
-              "https://nationalzoo.si.edu/sites/default/files/animals/sandcat-002.jpg",
-            userImage: 
-              "https://pbs.twimg.com/profile_images/1633238286045962243/JfgDezi9_400x400.jpg",
-              likes: 14,
-            timestamp: "2d",
-            content:"This is a post content!!!",
-            listcomments: [
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              },
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              }
-            ]
-          },
-          {
-            user: "kobee_18",
-            postImage:
-              "https://nationalzoo.si.edu/sites/default/files/animals/sandcat-002.jpg",
-            userImage: 
-              "https://pbs.twimg.com/profile_images/1633238286045962243/JfgDezi9_400x400.jpg",
-              likes: 14,
-            timestamp: "2d",
-            content:"This is a post content!!!",
-            listcomments: [
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              },
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              }
-            ]
-          },
-          {
-            user: "kobee_18",
-            postImage:
-              "https://nationalzoo.si.edu/sites/default/files/animals/sandcat-002.jpg",
-            userImage: 
-              "https://pbs.twimg.com/profile_images/1633238286045962243/JfgDezi9_400x400.jpg",
-              likes: 14,
-            timestamp: "2d",
-            content:"This is a post content!!!",
-            listcomments: [
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              },
-              { author: "cat one",
-                avatar: "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2019/09/1024/512/FatCat1Istock.jpg?ve=1&tl=1",
-                content: "That's good one!", datetime: "1d",
-                replies: [
-                  {author: "cat two", avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"},
-                  {author: "cat three",avatar: "https://img.freepik.com/free-vector/cute-fat-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-flat_138676-4619.jpg", content: "Yes, i think it too", datetime: "1d"}
-                ]
-              }
-            ]
-          }
-        ]
-    }
-    const handleToggleDropdown = () => {
-      setOpen(!open);
-    };
-    
-    const handleOpenModal = (post) => {
-      setSelectedPost(post);
-      setIsModalOpen(true);
-    };
+  useEffect(() => {
+    fetch('http://localhost:8000/user/info', {method: 'get', credentials: 'include'}).then(res => res.json()).then((res) => {
+      console.log(res.dbUser.Posts);
+      setUser(res.dbUser);
+    })
+  }, [])
 
-    const handleCloseModal = () => {
-      setSelectedPost(null);
-      setIsModalOpen(false);
-    };
-    const handlePostItemClick = (post) => () => {
-      handleOpenModal(post);
-    };
-    function afterOpenModal() {
+  const handleToggleDropdown = () => {
+    setOpen(!open);
+  };
+  
+  const handleOpenModal = (post) => {
+    setSelectedPost(post);
+    setIsModalOpen(true);
+  };
 
-    }
-    const handleClickEdit = (e)=>{
-      setOpen(!open)
-      setShowEditModal(true);
-    }
-    const handelClickDelete = (e)=>{
-      setOpen(!open)
-      handleOpenDeleteModal()
-    }
-    const handleOpenDeleteModal = () => {
-      setShowDeleteModal(true);
-    };
+  const handleCloseModal = () => {
+    setSelectedPost(null);
+    setIsModalOpen(false);
+  };
+  const handlePostItemClick = (post) => () => {
+    handleOpenModal(post);
+  };
+  function afterOpenModal() {
+
+  }
+  const handleClickEdit = (e)=>{
+    setOpen(!open)
+    setShowEditModal(true);
+  }
+  const handelClickDelete = (e)=>{
+    setOpen(!open)
+    handleOpenDeleteModal()
+  }
+  const handleOpenDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDelete = (ID_Post) => {
+    console.log(ID_Post);
+    fetch('http://localhost:8000/forum/deletepost', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({id: ID_Post}),
+      credentials: 'include'
+    }).then(res => res.json).then((res) => {
+      console.log(res);
+    })
+    setShowDeleteModal(false);
+  };
   
-    const handleCloseDeleteModal = () => {
-      setShowDeleteModal(false);
-    };
-  
-    const handleCloseEditModal = () => {
-      setShowDeleteModal(false);
-    };
-  
-    const handleDelete = () => {
-      // Xử lý logic xóa ở đây
-      setShowDeleteModal(false);
-    };
-    const handleEdit = ()=>{
-      setShowEditModal(false)
-    }
+  const handleEdit = ()=>{
+    // fetch('http://localhost:8000/forum/updatepost', {
+    //   method: 'put',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ID_Post: ID_Post}),
+    //   credentials: 'include'
+    // }).then(res => res.json).then((res) => {
+    //   console.log(res);
+    // });
+    setShowEditModal(false);
+  }
   return (
     <Wrapper>
         <div className="container">
@@ -312,7 +249,7 @@ function Profile() {
             <div className="editWrapper">
                 <ProfileContainer>
                     <div>
-                        <ProfileImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxeVKKhcw5BVb33-sIFbVwBxpGvFjAORNkHA&usqp=CAU" alt="Profile Image" />
+                        <ProfileImage src={'http://localhost:8000/' + user.avatar} alt="Profile Image" />
                     </div>
                     <div>
                         <div className='contain_username'>
@@ -321,7 +258,7 @@ function Profile() {
                               <Link href='/account/edit'>Edit Profile</Link>
                             </ProfileButton>
                         </div>
-                        <ProfileBio><strong>{user.posts.length}</strong> posts</ProfileBio>
+                        <ProfileBio><strong>{user.Posts?.length}</strong> posts</ProfileBio>
                         <ProfileName>{user.fullname}</ProfileName>
                         <ProfileBio>{user.bio}</ProfileBio>
                         <ProfileName><strong>::::</strong> POSTS</ProfileName>
@@ -332,9 +269,9 @@ function Profile() {
                 </div>
                 <div className='container_posts'>
                     <PostsContainer>
-                                {user.posts.map((post, index) => (
-                                  <PostItem key={index} src={post.postImage} alt={`Photo ${index + 1}`} onClick={handlePostItemClick(post)} />
-                                ))}
+                        {user.Posts?.map((post, index) => (
+                          <PostItem key={index} src={post.postImage} alt={`Photo ${index + 1}`} onClick={handlePostItemClick(post)} />
+                        ))}
                     </PostsContainer>
                 </div>
             </div>
@@ -354,16 +291,16 @@ function Profile() {
                   <DropdownItem onClick={()=>handleClickEdit()}>Edit</DropdownItem>
                   <DropdownItem onClick={()=>handelClickDelete()}>Delete</DropdownItem>
                 </DropdownList>
-                <Post user={selectedPost.user}
-                    postImage={selectedPost.postImage}
-                    userImage = {selectedPost.userImage}
+                <Post user={user.username}
+                    postImage={'http://localhost:8000/images' + selectedPost.postImage}
+                    userImage = {'http://localhost:8000/images' + user.userImage}
                     likes={selectedPost.likes}
-                    timestamp={selectedPost.timestamp}
+                    timestamp={null}
                     content={selectedPost.content}
-                    listcomments = {selectedPost.listcomments}/>
+                    listcomments = {null}/>
                 <ConfirmDeleteModal
                   show={showDeleteModal}
-                  onDelete={()=>handleDelete()}
+                  onDelete={()=>handleDelete(selectedPost.ID_Post)}
                   onCancel={()=>handleCloseDeleteModal()}
                 />
                 <EditModal

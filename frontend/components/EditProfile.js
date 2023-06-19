@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import styled from "@emotion/styled";
+import React, { useState } from "react";
 
 function EditProfile() {
   const [name, setName] = useState("");
@@ -30,14 +30,14 @@ function EditProfile() {
     <Wrapper>
       <Container>
         <Form onSubmit={handleSubmit}>
-          <Label>Username</Label>
+          <Label>Fullname</Label>
           <Input type="text" value={name} onChange={handleNameChange} />
-
-          <Label>Gender</Label>
-          <Input type="text" value={username} onChange={handleUsernameChange} />
 
           <Label>Bio</Label>
           <Textarea value={bio} onChange={handleBioChange} />
+
+          <Label>Avatar</Label>
+          <Input type="text" value={username} onChange={handleUsernameChange} />
 
           <Button type="submit">Save Changes</Button>
         </Form>

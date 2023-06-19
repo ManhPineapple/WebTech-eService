@@ -16,7 +16,7 @@ authRouter.get('/facebook/callback',
   authController.facebook
 );
 
-authRouter.post('/password', authController.passwordResetRequest);
+authRouter.post('/password/request', authController.passwordResetRequest);
 authRouter.post('/password/reset', authController.passwordReset);
 // Example: How to use authMiddleware
 
