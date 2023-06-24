@@ -241,78 +241,93 @@ function Profile() {
   }
   return (
     <Wrapper>
-        <div className="container">
-                <div className="navWrapper">
-                    <Layout >
-                    </Layout>
-                </div>
-            <div className="editWrapper">
-                <ProfileContainer>
-                    <div>
-                        <ProfileImage src={'http://localhost:8000/' + user.avatar} alt="Profile Image" />
-                    </div>
-                    <div>
-                        <div className='contain_username'>
-                            <ProfileUsername>{user.username}</ProfileUsername>
-                            <ProfileButton>
-                              <Link href='/account/edit'>Edit Profile</Link>
-                            </ProfileButton>
-                        </div>
-                        <ProfileBio><strong>{user.Posts?.length}</strong> posts</ProfileBio>
-                        <ProfileName>{user.fullname}</ProfileName>
-                        <ProfileBio>{user.bio}</ProfileBio>
-                        <ProfileName><strong>::::</strong> POSTS</ProfileName>
-                    </div>
-                </ProfileContainer>
-                <div class="parent-container">
-                    <div class="horizontal-line"></div>
-                </div>
-                <div className='container_posts'>
-                    <PostsContainer>
-                        {user.Posts?.map((post, index) => (
-                          <PostItem key={index} src={post.postImage} alt={`Photo ${index + 1}`} onClick={handlePostItemClick(post)} />
-                        ))}
-                    </PostsContainer>
-                </div>
-            </div>
+      <div className="container">
+        <div className="navWrapper">
+          <Layout></Layout>
         </div>
-        {/* Post Modal */}
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={handleCloseModal}
-          contentLabel="Post Modal"
-          style={customStyles}
-          onAfterOpen={afterOpenModal}
-        >
-            {selectedPost && (
-              <div>
-                <Settings onClick={()=>handleToggleDropdown()}>:::</Settings>
-                <DropdownList toggle={() => setOpen(!open)}  open={open}>
-                  <DropdownItem onClick={()=>handleClickEdit()}>Edit</DropdownItem>
-                  <DropdownItem onClick={()=>handelClickDelete()}>Delete</DropdownItem>
-                </DropdownList>
-                <Post user={user.username}
-                    postImage={'http://localhost:8000/images' + selectedPost.postImage}
-                    userImage = {'http://localhost:8000/images' + user.userImage}
-                    likes={selectedPost.likes}
-                    timestamp={null}
-                    content={selectedPost.content}
-                    listcomments = {null}/>
-                <ConfirmDeleteModal
-                  show={showDeleteModal}
-                  onDelete={()=>handleDelete(selectedPost.ID_Post)}
-                  onCancel={()=>handleCloseDeleteModal()}
-                />
-                <EditModal
-                  show={showEditModal}
-                  onEdit={()=>handleEdit()}
-                  onCancel={()=>handleCloseEditModal()}
-                  post = {selectedPost}
-                />
+        <div className="editWrapper">
+          <ProfileContainer>
+            <div>
+              <ProfileImage
+                src={'http://localhost:8000/' + user.avatar}
+                alt="Profile Image"
+              />
+            </div>
+            <div>
+              <div className="contain_username">
+                <ProfileUsername>{user.username}</ProfileUsername>
+                <ProfileButton>
+                  <Link href="/account/edit">Edit Profile</Link>
+                </ProfileButton>
               </div>
-            )
-        }
-        </Modal>
+              <ProfileBio>
+                <strong>{user.Posts?.length}</strong> posts
+              </ProfileBio>
+              <ProfileName>{user.fullname}</ProfileName>
+              <ProfileBio>{user.bio}</ProfileBio>
+              <ProfileName>
+                <strong>::::</strong> POSTS
+              </ProfileName>
+            </div>
+          </ProfileContainer>
+          <div className="parent-container">
+            <div className="horizontal-line"></div>
+          </div>
+          <div className="container_posts">
+            <PostsContainer>
+              {user.Posts?.map((post, index) => (
+                <PostItem
+                  key={index}
+                  src={'http://localhost:8000/' + post.postImage}
+                  alt={`Photo ${index + 1}`}
+                  onClick={handlePostItemClick(post)}
+                />
+              ))}
+            </PostsContainer>
+          </div>
+        </div>
+      </div>
+  
+      {/* Post Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="Post Modal"
+        style={customStyles}
+        onAfterOpen={afterOpenModal}
+      >
+        {selectedPost && (
+          <div>
+            <Settings onClick={() => handleToggleDropdown()}>:::</Settings>
+            <DropdownList toggle={() => setOpen(!open)} open={open}>
+              <DropdownItem onClick={() => handleClickEdit()}>Edit</DropdownItem>
+              <DropdownItem onClick={() => handelClickDelete()}>
+                Delete
+              </DropdownItem>
+            </DropdownList>
+            <Post
+              user={user.username}
+              postImage={'http://localhost:8000/' + selectedPost.postImage}
+              userImage={'http://localhost:8000/' + user.avatar}
+              likes={selectedPost.likes}
+              timestamp={null}
+              content={selectedPost.content}
+              listcomments={null}
+            />
+            <ConfirmDeleteModal
+              show={showDeleteModal}
+              onDelete={() => handleDelete(selectedPost.ID_Post)}
+              onCancel={() => handleCloseDeleteModal()}
+            />
+            <EditModal
+              show={showEditModal}
+              onEdit={() => handleEdit()}
+              onCancel={() => handleCloseEditModal()}
+              post={selectedPost}
+            />
+          </div>
+        )}
+      </Modal>
     </Wrapper>
   );
 }

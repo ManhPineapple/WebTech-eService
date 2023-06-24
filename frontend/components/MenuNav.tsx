@@ -63,7 +63,6 @@ function MenuNav() {
     const file = e.target.files[0];
     setImage(file);
     const imageURL = URL.createObjectURL(file);
-    console.log(imageURL)
     setImageURL(imageURL);
   };
 
@@ -79,7 +78,7 @@ function MenuNav() {
       credentials: 'include'
     }).then(res => res.json())
       .then((res) => {
-        console.log(res);
+        alert(res.message);
       })
     // Reset the form after submitting
     setCaption("");

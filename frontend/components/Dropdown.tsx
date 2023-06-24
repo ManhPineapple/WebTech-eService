@@ -61,13 +61,14 @@ function UserDropdown({ collapsed }: { collapsed?: boolean }) {
 }
 
 const DropdownReference = styled.div`
-    margin-top: 25px;
     margin-left: 25px;
+    position: fixed;
+    bottom: 25px;
+    width: 240px;
     .cover-icon {
       display: flex;
       align-items: center;
     }
-    
 `;
 
 const DropdownItemBtn = styled.div`

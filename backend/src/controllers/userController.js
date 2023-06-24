@@ -19,6 +19,36 @@ const userController = {
     } catch (error) {
       return res.status(500).json({status:true});
     }
+  },
+
+  async updateInfo(req, res) {
+    const { fullname, bio, username} = req.body;
+    const avatar = req.file;
+    try {
+      if (!username) {
+          return res.status(500).json({
+            message: 'Missing required field'
+          })
+      } else {
+          let updateData = {};
+          if (avatar.originalname != 'hello.txt') {
+            updateData.avatar = avatar.path;
+          }
+          if (fullname != '') {
+            updateData.fullname = fullname;
+          }
+          if (bio != '') {
+            updateData.bio = bio;
+          }
+          await db.User.update(updateData, { where: { username: username } });
+
+          return res.status(200).json({
+              message: "Update info successful!"
+          })
+      }
+    } catch (error) {
+        return res.status(500).json({message: 'Some error'});
+    }
   }
 }
 

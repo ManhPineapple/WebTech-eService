@@ -1,17 +1,24 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
+import { useAppSelector } from 'src/redux/store';
 
 function EditProfile() {
+  const { user } = useAppSelector((s) => ({
+    user: s.user.data,
+  }));
+
+  const initFile = new File(['Hello, world!'], 'hello.txt', { type: 'text/plain' });
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [avatar, setAvatar] = useState(initFile);
   const [bio, setBio] = useState("");
 
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    setAvatar(file);
   };
 
   const handleBioChange = (event) => {
@@ -21,9 +28,19 @@ function EditProfile() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Do something with the form data, e.g., send it to the server
-    console.log("Name:", name);
-    console.log("Username:", username);
-    console.log("Bio:", bio);
+    const body = new FormData();
+    body.append("avatar", avatar);
+    body.append("fullname", name);
+    body.append("bio", bio);
+    body.append("username", user.username);
+    fetch('http://localhost:8000/user/update', {
+      method: 'PUT',
+      body: body,
+      credentials: 'include'
+    }).then(res => res.json())
+      .then((res) => {
+        alert(res.message);
+      })
   };
 
   return (
@@ -37,7 +54,7 @@ function EditProfile() {
           <Textarea value={bio} onChange={handleBioChange} />
 
           <Label>Avatar</Label>
-          <Input type="text" value={username} onChange={handleUsernameChange} />
+          <Input style={{border:'none'}} type="file" accept="image/*" onChange={handleAvatarChange} />
 
           <Button type="submit">Save Changes</Button>
         </Form>
@@ -101,6 +118,15 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-top: 40px;
+`;
+
+const ImagePreview = styled.img`
+  margin: auto;
+  height: 45vh;
+  width: auto;
+  max-width: 50vh;
+  background-color: #f5225e;
+  border: 1px solid #000000;
 `;
 
 export default EditProfile;

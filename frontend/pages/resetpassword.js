@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import WithoutAuth from '../hooks/withoutAuth';
 
 const Wrapper = styled.div `
+    overflow-y: hidden;
     .footer {
         padding-bottom: 20px;
     }
@@ -33,8 +34,8 @@ const Wrapper = styled.div `
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 35vh;
-  margin: 15vh auto;
+  width: 35vw;
+  margin: 10vh auto;
   padding: 20px 20px;
   background-color: #fafafa;
   border: 2px solid #dbdbdb;
@@ -130,7 +131,7 @@ function ResetPassword() {
 
   const handleSubmit = () => {
     console.log(token, newPassword, confirmNewPassword);
-    if (newPassword !== confirmNewPassword) { alert('Password not match'); return }
+    if (newPassword !== confirmNewPassword) { setErrorMessage("New password and confirm password do not match."); return }
     fetch('http://localhost:8000/auth/password/reset', {
       method: 'POST',
       headers: {
@@ -167,114 +168,114 @@ function ResetPassword() {
 
   return (
     <Wrapper>
-        <Container>
-            <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo" />
-            <Lock src="https://static.vecteezy.com/system/resources/thumbnails/002/205/981/small/lock-icon-free-vector.jpg" alt="Instagram Logo" />
-            <Title>Trouble logging in?</Title>
-            <p style={{textAlign: 'center'}}>Enter your email and we will send you a link to get back into your account.</p>
-            <Form>
-                <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-                <Button type='button' onClick = {()=>sendLoginLink()}>Send login link</Button>
-                <div style={{backgroundColor: '#ccd8ed',padding: '10px',marginTop: '20px'}}>
-                    <Link href="/login">Back to Login</Link>
-                </div>
-            </Form>
-        </Container>
-        <footer className="footer">
-            <div className="links">
-                <a href="https://about.meta.com/" target='_blank' rel='noreferrer'>
-                Meta
-                </a>
-                <a
-                href="https://about.instagram.com/"
-                target='_blank'
-                rel='noreferrer'
-                >
-                About
-                </a>
-                <a
-                href='https://about.instagram.com/blog/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Blog
-                </a>
-                <a
-                href='https://about.instagram.com/about-us/careers'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Jobs
-                </a>
-                <a
-                href='https://help.instagram.com/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Help
-                </a>
-                <a
-                href='https://developers.facebook.com/docs/instagram'
-                target='_blank'
-                rel='noreferrer'
-                >
-                API
-                </a>
-                <a
-                href='https://privacycenter.instagram.com/policy/?entry_point=ig_help_center_data_policy_redirect'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Privacy
-                </a>
-                <a
-                href='https://help.instagram.com/581066165581870/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Terms
-                </a>
-                <a
-                href='https://www.instagram.com/directory/profiles/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Top Accounts
-                </a>
-                <a
-                href='https://www.instagram.com/explore/locations/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Locations
-                </a>
-                <a
-                href='https://www.instagram.com/web/lite/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Instagram Lite
-                </a>
-                <a
-                href='https://www.facebook.com/help/instagram/261704639352628'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Contact Uploading & Non-Users
-                </a>
-                <a
-                href='https://about.meta.com/technologies/meta-verified/'
-                target='_blank'
-                rel='noreferrer'
-                >
-                Meta Verified
-                </a>
-            </div>
-  
-             <div className='copyright'>© {new Date().getFullYear()} Instagram from Meta</div>
-        </footer>
+      <Container>
+        <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo" />
+        <Lock src="https://static.vecteezy.com/system/resources/thumbnails/002/205/981/small/lock-icon-free-vector.jpg" alt="Instagram Logo" />
+        <Title>Trouble logging in?</Title>
+        <p style={{textAlign: 'center'}}>Enter your email and we will send you a link to get back into your account.</p>
+        <Form>
+          <Input type="email" id="email" name="email" placeholder = "Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+          <Button type='button' onClick = {()=>sendLoginLink()}>Send login link</Button>
+          
+          <div style={{backgroundColor: '#ccd8ed',padding: '10px',marginTop: '20px'}}>
+            <Link href="/login">Back to Login</Link>
+          </div>
+        </Form>
+      </Container>
+      <footer className="footer">
+          <div className="links">
+              <a href="https://about.meta.com/" target='_blank' rel='noreferrer'>
+              Meta
+              </a>
+              <a
+              href="https://about.instagram.com/"
+              target='_blank'
+              rel='noreferrer'
+              >
+              About
+              </a>
+              <a
+              href='https://about.instagram.com/blog/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Blog
+              </a>
+              <a
+              href='https://about.instagram.com/about-us/careers'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Jobs
+              </a>
+              <a
+              href='https://help.instagram.com/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Help
+              </a>
+              <a
+              href='https://developers.facebook.com/docs/instagram'
+              target='_blank'
+              rel='noreferrer'
+              >
+              API
+              </a>
+              <a
+              href='https://privacycenter.instagram.com/policy/?entry_point=ig_help_center_data_policy_redirect'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Privacy
+              </a>
+              <a
+              href='https://help.instagram.com/581066165581870/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Terms
+              </a>
+              <a
+              href='https://www.instagram.com/directory/profiles/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Top Accounts
+              </a>
+              <a
+              href='https://www.instagram.com/explore/locations/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Locations
+              </a>
+              <a
+              href='https://www.instagram.com/web/lite/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Instagram Lite
+              </a>
+              <a
+              href='https://www.facebook.com/help/instagram/261704639352628'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Contact Uploading & Non-Users
+              </a>
+              <a
+              href='https://about.meta.com/technologies/meta-verified/'
+              target='_blank'
+              rel='noreferrer'
+              >
+              Meta Verified
+              </a>
+          </div>
+
+            <div className='copyright'>© {new Date().getFullYear()} Instagram from Meta</div>
+      </footer>
     </Wrapper>
-    
   );
 }
 

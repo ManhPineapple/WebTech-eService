@@ -42,7 +42,7 @@ function Timeline() {
         </div>
         <div className="timeline__right">
           {user && 
-          <Suggestions user={{userImage: 'http://localhost:8000/images' + user.avatar,
+          <Suggestions user={{userImage: 'http://localhost:8000/' + user.avatar,
                               username: user.username,
                               fullName: user.fullname
                               }} />

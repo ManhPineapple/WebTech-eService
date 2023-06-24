@@ -21,14 +21,14 @@ module.exports = {
         username: 'admin',
         fullname: 'adminname',
         email: 'admin@gmail.com',
-        phone_number: '0123456789',
+        avatar: 'images/image-initAvatar.jpg',
         password: hashedAdmin
       },
       {
         username: 'user',
         fullname: 'username',
         email: 'user@gmail.com',
-        phone_number: '0123456789',
+        avatar: 'images/image-initAvatar.jpg',
         password: hashedUser
       },
     ], {});

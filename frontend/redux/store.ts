@@ -30,6 +30,7 @@ const persistReducerConfig = getPersistConfig({
     'visible.isSiderCollapsed',
     'theme',
     'user.data.username',
+    'user.data.avatar'
   ],
   rootReducer: reducers,
 });

@@ -17,7 +17,12 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+      console.log(payload);
+      
       state.data = payload.data;
+
+      console.log(state.data);
+      
     });
     builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
       state.data = null;

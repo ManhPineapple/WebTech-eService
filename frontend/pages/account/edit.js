@@ -49,44 +49,49 @@ function Settings() {
   return (
     <Wrapper>
       <div className="container">
-          <div className="navWrapper">
-              <Layout >
-              </Layout>
-          </div>
-
-          <div className="editWrapper">
+        <div className="navWrapper">
+          <Layout></Layout>
+        </div>
+  
+        <div className="editWrapper">
           <Container>
             <Navbar>
-              <NavItem active={activeTab === "edit"} onClick={() => handleTabChange("edit")}>
+              <NavItem
+                active={activeTab === 'edit'}
+                onClick={() => handleTabChange('edit')}
+              >
                 Edit Profile
               </NavItem>
-              <NavItem active={activeTab === "privacyAndSecurity"} onClick={() => handleTabChange("privacyAndSecurity")}>
+              <NavItem
+                active={activeTab === 'privacyAndSecurity'}
+                onClick={() => handleTabChange('privacyAndSecurity')}
+              >
                 Change password
               </NavItem>
             </Navbar>
             {renderContent()}
-        </Container>
-          </div>
+          </Container>
         </div>
+      </div>
     </Wrapper>
   );
 }
-
+  
 const Wrapper = styled.div`
-    .container {
-      display: flex;
-      flex-direction: row;
-    }
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
 
-    .navWrapper {
-      position: relative;
-      flex: 0.2;
-    }
+  .navWrapper {
+    position: relative;
+    flex: 0.2;
+  }
 
-    .editWrapper {
-      position: relative;
-      flex: 0.8;
-    }
+  .editWrapper {
+    position: relative;
+    flex: 0.8;
+  }
 `;
 const Container = styled.div`
   max-width: 600px;

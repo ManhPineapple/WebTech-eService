@@ -42,147 +42,201 @@ function LoginPage() {
     <PageWrapper>
       <div className='main-container'>
         <Card className='form-container' bordered>
-          { !signUp && 
+          { !signUp && (
             <Form
               form={form}
-              layout='vertical'
-              size='large'
+              layout="vertical"
+              size="large"
               requiredMark={false}
               onFinish={handleLogin}
               disabled={isLoading}
-            > 
-              <div className='img-instagram-container'>
-                <i  data-visualcompletion="css-img" 
-                    aria-label="Instagram" role="img"
-                    className='img-instagram'></i>
+            >
+              <div className="img-instagram-container">
+                <i
+                  data-visualcompletion="css-img"
+                  aria-label="Instagram"
+                  role="img"
+                  className="img-instagram"
+                ></i>
               </div>
               <Form.Item
-                name='username'
+                name="username"
                 rules={[{ required: true, message: '• Trường này là bắt buộc' }]}
               >
-                <Input prefix={<FaPhoneAlt />} type='tel' placeholder='Phone number, username, or email' />
+                <Input
+                  prefix={<FaPhoneAlt />}
+                  type="tel"
+                  placeholder="Phone number, username, or email"
+                />
               </Form.Item>
               <Form.Item
-                name='password'
-                rules={[
-                  { required: true, message: '• Mật khẩu là bắt buộc' },
-                ]}
+                name="password"
+                rules={[{ required: true, message: '• Mật khẩu là bắt buộc' }]}
               >
-                <Input.Password prefix={<FaLock />} placeholder='Password' />
+                <Input.Password prefix={<FaLock />} placeholder="Password" />
               </Form.Item>
 
               <Form.Item>
-                <Button style={{backgroundColor: '#0095F6',paddingTop: '3px',fontWeight:'bold',color:'white'}} htmlType='submit' block >
+                <Button
+                  style={{
+                    backgroundColor: '#0095F6',
+                    paddingTop: '3px',
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}
+                  htmlType="submit"
+                  block
+                >
                   Log in
                 </Button>
               </Form.Item>
 
               <div className="label-or-container">
                 <div className="line-label"></div>
-                   <label className="label-or">OR</label>
+                <label className="label-or">OR</label>
                 <div className="line-label"></div>
               </div>
 
               <div>
                 <Link href="">
                   <div className="login-facebook-container">
-                    <AiFillFacebook size={30} className="facebook-icon" color='#385185'/>
-                    <span style={{fontWeight: 'bold', color:'#385185',fontSize:'16px'}}>Log in with Facebook</span>
+                    <AiFillFacebook
+                      size={30}
+                      className="facebook-icon"
+                      color="#385185"
+                    />
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#385185',
+                        fontSize: '16px',
+                      }}
+                    >
+                      Log in with Facebook
+                    </span>
                   </div>
                 </Link>
               </div>
 
-              <div className='forgot-password-container'> 
+              <div className="forgot-password-container">
                 <Link href="/resetpassword">
-                    <span style ={{fontSize: '14px',color: 'black'}}>Forgot password?</span>
+                  <span style={{ fontSize: '14px', color: 'black' }}>
+                    Forgot password?
+                  </span>
                 </Link>
               </div>
             </Form>
-          }
+          )}
 
-          { signUp && 
+          { signUp && (
             <Form
               form={form}
-              layout='vertical'
-              size='large'
+              layout="vertical"
+              size="large"
               requiredMark={false}
               onFinish={handleSignUp}
               disabled={isLoading}
-            > 
-              <div className='img-instagram-container'>
-                <i  data-visualcompletion="css-img" 
-                    aria-label="Instagram" role="img"
-                    className='img-instagram'></i>
+            >
+              <div className="img-instagram-container">
+                <i
+                  data-visualcompletion="css-img"
+                  aria-label="Instagram"
+                  role="img"
+                  className="img-instagram"
+                ></i>
               </div>
 
-              <div style={{fontSize: '18px', fontWeight: 'bold', textAlign: 'center',marginBottom:'10px'}}>
-                 Sign up to see photos and videos from your friends
-              </div> 
+              <div
+                style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginBottom: '10px',
+                }}
+              >
+                Sign up to see photos and videos from your friends
+              </div>
 
               <Form.Item>
-                <Button block className="login-facebook-container" style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
-                  <AiFillFacebook size={25} className="facebook-icon" color='white'/>
-                  <span style={{fontWeight: 'bold', color:'white',fontSize: '15px'}}>Log in with Facebook</span>
+                <Button
+                  block
+                  className="login-facebook-container"
+                  style={{ backgroundColor: '#0095F6', paddingTop: '3px' }}
+                >
+                  <AiFillFacebook size={25} className="facebook-icon" color="white" />
+                  <span
+                    style={{ fontWeight: 'bold', color: 'white', fontSize: '15px' }}
+                  >
+                    Log in with Facebook
+                  </span>
                 </Button>
               </Form.Item>
 
-              <div className="label-or-container" style={{marginBottom: '25px'}}>
+              <div
+                className="label-or-container"
+                style={{ marginBottom: '25px' }}
+              >
                 <div className="line-label"></div>
                 <label className="label-or">OR</label>
                 <div className="line-label"></div>
               </div>
 
               <Form.Item
-                name='email'
-                rules={[
-                  { required: true, message: '• Email is required' },
-                ]}
+                name="email"
+                rules={[{ required: true, message: '• Email is required' }]}
               >
-                <Input prefix={<AiOutlineMail />} type='email' placeholder='Email' />
+                <Input
+                  prefix={<AiOutlineMail />}
+                  type="email"
+                  placeholder="Email"
+                />
               </Form.Item>
               <Form.Item
-                name='fullname'
-                rules={[
-                  { required: true, message: '• Full Name is required' },
-                ]}
+                name="fullname"
+                rules={[{ required: true, message: '• Full Name is required' }]}
               >
-                <Input prefix={<FaSignature size={22}/>} placeholder='Full Name' />
+                <Input prefix={<FaSignature size={22} />} placeholder="Full Name" />
               </Form.Item>
 
               <Form.Item
-                name='username'
-                rules={[
-                  { required: true, message: '• User name is required' },
-                ]}
+                name="username"
+                rules={[{ required: true, message: '• User name is required' }]}
               >
-                <Input prefix={<BsPeople size={22}/>} placeholder='User name' />
-              </Form.Item>
-                
-              <Form.Item
-                name='password'
-                rules={[
-                  { required: true, message: '• Password is required' },
-                ]}
-              >
-                <Input.Password prefix={<FaLock />} placeholder='Password' />
+                <Input prefix={<BsPeople size={22} />} placeholder="User name" />
               </Form.Item>
 
-              <div style={{textAlign: 'center',fontSize: '12px',margin: '10px'}}>
-                <span >People who use our service may have uploaded your contact information to Instagram.&nbsp;
-                   <a href="https://www.facebook.com/help/instagram/261704639352628">Learn more.</a> 
+              <Form.Item
+                name="password"
+                rules={[{ required: true, message: '• Password is required' }]}
+              >
+                <Input.Password prefix={<FaLock />} placeholder="Password" />
+              </Form.Item>
+
+              <div style={{ textAlign: 'center', fontSize: '12px', margin: '10px' }}>
+                <span>
+                  People who use our service may have uploaded your contact information
+                  to Instagram.&nbsp;
+                  <a href="https://www.facebook.com/help/instagram/261704639352628">
+                    Learn more.
+                  </a>
                 </span>
                 <br></br>
                 <br></br>
-                <span >By signing up, you agree to our&nbsp;
-                  <a>Terms</a>&nbsp;,&nbsp;<a>Privacy Policy</a> &nbsp;and&nbsp;<a>Cookies Policy</a>.</span>
+                <span>
+                  By signing up, you agree to our&nbsp;
+                  <a>Terms</a>&nbsp;,&nbsp;<a>Privacy Policy</a> &nbsp;and&nbsp;
+                  <a>Cookies Policy</a>.
+                </span>
               </div>
               <Form.Item>
-                <Button  htmlType='submit' block style={{backgroundColor: '#0095F6',paddingTop: '3px'}}>
-                  <span style={{fontSize: '14px',fontWeight: 'bold',color: 'white'}}>Sign up</span>
+                <Button htmlType="submit" block style={{ backgroundColor: '#0095F6', paddingTop: '3px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 'bold', color: 'white' }}>
+                    Sign up
+                  </span>
                 </Button>
               </Form.Item>
             </Form>
-          }
+          )}
         </Card>
         <Card className='card-signup'>
           <div className='signup-container'>
@@ -200,16 +254,16 @@ function LoginPage() {
             <span>Get the app</span>
           </div>
           <div className='get-app-container_img-container'>
-              <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD3643E85-E336-40AD-8324-1F119EBE44A7%26utm_content%3Dlo%26utm_medium%3Dbadge">
-                <img alt="Get it on Google Play" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png"/>
-              </a>
-              <a href="ms-windows-store://pdp/?productid=9nblggh5l9xt&referrer=appbadge&source=www.instagram.com&mode=mini&pos=0%2C0%2C2560%2C1392"> 
-                <img alt="Get it from Microsoft" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png"/>
-              </a>
+            <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD3643E85-E336-40AD-8324-1F119EBE44A7%26utm_content%3Dlo%26utm_medium%3Dbadge">
+              <img alt="Get it on Google Play" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png"/>
+            </a>
+            <a href="ms-windows-store://pdp/?productid=9nblggh5l9xt&referrer=appbadge&source=www.instagram.com&mode=mini&pos=0%2C0%2C2560%2C1392"> 
+              <img alt="Get it from Microsoft" className="img" src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png"/>
+            </a>
           </div>
         </div>
       </div>
-
+      
       <footer className="footer">
         <div className="links">
           <a href="https://about.meta.com/" target='_blank' rel='noreferrer'>

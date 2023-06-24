@@ -1,7 +1,12 @@
-import React, { useState } from "react";
 import styled from "@emotion/styled";
+import React, { useState } from "react";
+import { useAppSelector } from 'src/redux/store';
 
 function ChangePassword() {
+  const { user } = useAppSelector((s) => ({
+    user: s.user.data,
+  }));
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -28,6 +33,20 @@ function ChangePassword() {
       console.log("Current Password:", currentPassword);
       console.log("New Password:", newPassword);
       console.log("Confirm New Password:", confirmNewPassword);
+      const body = new FormData();
+      body.append("username", user.username);
+      body.append("oldPassword", currentPassword);
+      body.append("newPassword", newPassword);
+      fetch('http://localhost:8000/auth/password-change', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: user.username, newPassword: newPassword, oldPassword: currentPassword}),
+      }).then(res => res.json())
+        .then((res) => {
+          alert(res.message);
+        })
     }
   };
 

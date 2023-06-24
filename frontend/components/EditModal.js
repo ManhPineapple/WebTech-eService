@@ -4,22 +4,22 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 
 const customStyles = {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Màu nền của overlay
-      zIndex: 1000, // Độ ưu tiên hiển thị
-    },
-    content: {
-      width: '70%',
-      height: '90%',
-      top: '50%',
-      left: '60%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '60%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
-  const Input = styled.input`
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 1000,
+  },
+  content: {
+    width: '70%',
+    height: '90%',
+    top: '50%',
+    left: '60%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '60%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+const Input = styled.input`
   margin-bottom: 16px;
 `;
 const CancelButton = styled.button`
@@ -66,40 +66,45 @@ const ConfirmDeleteModal = ({ show, onEdit, onCancel, post }) => {
   const [caption, setCaption] = useState(post.content);
   const [image, setImage] = useState(null);
   const [imgURL, setImageURL] = useState(post.postImage);
-  const handleImageChange = (e) => {
+  
+const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     const imageURL = URL.createObjectURL(file);
-    console.log(imageURL)
+    console.log(imageURL);
     setImageURL(imageURL);
-  };
-  const handleCaptionChange = (e) => {
+};
+  
+const handleCaptionChange = (e) => {
     setCaption(e.target.value);
-  };
-  return (
-    <Modal
-          isOpen={show}
-          onRequestClose={onCancel}
-          contentLabel="Post Modal"
-          style={customStyles}
-    >
-            <Title>Edit Post</Title>
-            <Form onSubmit={onEdit}>
-              <Label>Caption</Label>
-              <Textarea
-                value={caption}
-                onChange={handleCaptionChange}
-                placeholder="Write a caption..."
-              />
+};
 
-              <Label>Image</Label>
-              <Input type="file" accept="image/*" onChange={handleImageChange} />
-              <ImagePreview src={imgURL} />
-              <Button style={{marginTop: '20px'}} onClick={onEdit}>Confirm Edit</Button>
-              <CancelButton onClick={onCancel}>Cancel</CancelButton>
-            </Form>
+return (
+    <Modal
+      isOpen={show}
+      onRequestClose={onCancel}
+      contentLabel="Post Modal"
+      style={customStyles}
+    >
+      <Title>Edit Post</Title>
+      <Form onSubmit={onEdit}>
+        <Label>Caption</Label>
+        <Textarea
+          value={caption}
+          onChange={handleCaptionChange}
+          placeholder="Write a caption..."
+        />
+
+        <Label>Image</Label>
+        <Input type="file" accept="image/*" onChange={handleImageChange} />
+        <ImagePreview src={imgURL} />
+        <Button style={{ marginTop: '20px' }} onClick={onEdit}>
+          Confirm Edit
+        </Button>
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
+      </Form>
     </Modal>
-  );
+);
 };
 
 export default ConfirmDeleteModal;

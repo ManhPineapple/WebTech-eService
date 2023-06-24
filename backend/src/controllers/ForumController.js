@@ -61,8 +61,7 @@ const forumController = {
                 })
 
                 return res.status(200).json({
-                    status: "ok",
-                    post,
+                    message: 'Post created'
                 })
             }
         } catch (error) {

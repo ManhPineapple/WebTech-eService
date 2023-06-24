@@ -94,15 +94,25 @@ const authController = {
     },
 
     async login(req, res) {
+        const username = req.body.username;
         try {
             if (!req.body.username || !req.body.password)
                 return res.status(500).json({
                     status: false,
                     message: 'Missing required field'
                 })
-            const user = await db.User.findOne({
-                where: {username: req.body.username}
-            })
+            const isEmail = username.includes('@');
+            let user;
+            if (isEmail) {
+                user = await db.User.findOne({
+                    where: {email: req.body.username}
+                })
+            } else {
+                user = await db.User.findOne({
+                    where: {username: req.body.username}
+                })
+            }
+            
             if (!user)
                 return res.status(500).json({
                     status: false,
@@ -135,6 +145,7 @@ const authController = {
                     message: 'Wrong username or password'
                 })
         } catch (error) {
+            console.log(error);
             return res.status(500).json({status:false, message: ""});
         }
     },
@@ -200,6 +211,7 @@ const authController = {
 
     async passwordChange(req, res) {
         const { username, oldPassword, newPassword} = req.body;
+        console.log(req.body);
 
         const user = await db.User.findOne({
             where: {username: username}
