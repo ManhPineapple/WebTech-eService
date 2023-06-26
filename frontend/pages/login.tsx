@@ -23,6 +23,9 @@ function LoginPage() {
       .then(({ data, message }) => {
         alert(message);
       })
+      .catch(({data, message}) => {
+        alert(message)
+      })
   };
 
   const [registerMutate] = useRegisterMutation();
